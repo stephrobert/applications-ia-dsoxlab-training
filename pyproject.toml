@@ -19,8 +19,14 @@ norecursedirs = ["challenge/work", ".git", ".venv"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+# `solution/` est chiffrée (ansible-vault) : ce n'est plus du Python lisible.
+# `fixtures/` est le point de départ de l'apprenant et `challenge/work` ce qu'il
+# écrit : le lint du catalogue n'y touche pas (comme python-dsoxlab-training).
+exclude = ["labs/*/solution", "labs/*/fixtures", "labs/*/challenge/work"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "S"]
 # S101 : `assert` est l'outil de travail d'un test, pas un défaut.
-per-file-ignores = { "labs/**/tests/*.py" = ["S101"], "tests/*.py" = ["S101"] }
+# scripts/ est l'outillage du formateur, repris de python-dsoxlab-training : il
+# lance dsoxlab, pytest et ansible-vault, des outils de confiance (S603, S607).
+per-file-ignores = { "labs/**/tests/*.py" = ["S101"], "tests/*.py" = ["S101"], "scripts/*.py" = ["E501", "S603", "S607"] }
