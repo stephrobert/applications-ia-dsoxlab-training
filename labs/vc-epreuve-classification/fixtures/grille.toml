@@ -1,0 +1,144 @@
+# Classification grid / Grille de classification
+#
+# Source: course framing, doctrine_labs.classification (thresholds decided on
+# 2026-11-15, framing commit 862c3b3ff). This file is the ONLY place where the
+# grid's values live: classify.py and the lab's checks both read it. If a
+# threshold changes, it changes here and nowhere else.
+#
+# Source : cadrage de la formation, doctrine_labs.classification (seuils
+# décidés le 2026-11-15, commit 862c3b3ff du cadrage). Ce fichier est le SEUL
+# endroit où vivent les valeurs de la grille : classify.py et les contrôles du
+# lab le lisent tous les deux. Si un seuil change, il change ici et nulle part ailleurs.
+statut = "decide"
+
+# Each criterion gives a score from 0 to 3.
+# Chaque critère donne un score de 0 à 3.
+[criteres.donnees]
+aucune = 0
+internes = 1
+personnelles = 2
+sensibles = 3
+
+[criteres.flux_si]
+aucun = 0
+lecture = 2
+ecriture = 3
+
+[criteres.utilisateurs]
+auteur_seul = 0
+equipe = 1
+toute_entreprise = 2
+externes = 3
+
+[criteres.criticite_metier]
+aucune = 0
+utile = 1
+importante = 2
+critique = 3
+
+[exemples]
+donnees = "internes : documents de travail sans personne identifiable ; personnelles : noms, courriels, coordonnées de contacts fournisseurs ; sensibles : santé, paie, secrets, données de paiement"
+flux_si = "lecture : l'application lit l'ERP par une API ; écriture : elle crée ou modifie des données du SI"
+criticite_metier = "importante : l'arrêt gêne un service pendant plusieurs jours ; critique : l'arrêt bloque une activité de l'entreprise le jour même"
+
+# The highest criterion wins: the class comes from the highest score.
+# Le critère le plus élevé l'emporte : la classe vient du score le plus haut.
+[classe_par_score]
+0 = "C1"
+1 = "C2"
+2 = "C3"
+3 = "C4"
+
+[regle]
+texte = "En cas de doute sur un critère, on retient le score supérieur. Une classe peut toujours être relevée ; elle ne s'abaisse qu'avec une décision humaine écrite."
+# A class may always be raised above the computed one, with no ceiling; it is
+# only lowered by a written human decision, which this lab does not have.
+# Une classe peut toujours être relevée au-dessus de la classe calculée, sans
+# plafond ; elle ne s'abaisse qu'avec une décision humaine écrite, que ce lab
+# n'a pas.
+
+# What each class imposes. The [classes.Cn.texte] lines are the doctrine, word
+# for word; [classes.Cn.impose] says the same rules in a form a script can
+# compare.
+# Ce que chaque classe impose. Les lignes [classes.Cn.texte] sont la doctrine
+# mot pour mot ; [classes.Cn.impose] dit les mêmes règles sous une forme
+# qu'un script sait comparer.
+
+[classes.C1]
+nom = "Expérimentation personnelle"
+sens = "L'auteur seul, aucune donnée, aucun flux vers le SI."
+
+[classes.C1.impose]
+deploiement_plateforme = false
+controles = []
+approbation = "aucune"
+fiches_decision_signees = 0
+duree_autorisation_mois = 0  # sans objet : pas d'autorisation / not applicable: no authorisation
+
+[classes.C1.texte]
+controles = "Aucun contrôle de la plateforme ; l'application ne se déploie pas sur la plateforme d'accueil."
+proprietaire = "L'auteur."
+revue = "Aucune."
+approbation_humaine = "Aucune."
+duree_autorisation = "Sans objet (pas d'autorisation)."
+
+[classes.C2]
+nom = "Usage d'équipe, données internes"
+sens = "Une équipe, données internes, aucun flux vers le SI."
+
+[classes.C2.impose]
+deploiement_plateforme = true
+controles = ["gitleaks", "semgrep", "analyse_dependances", "dependances_epinglees", "sbom"]
+approbation = "proprietaire_technique"
+fiches_decision_signees = 0
+duree_autorisation_mois = 12
+
+[classes.C2.texte]
+controles = "Gitleaks, Semgrep et analyse des dépendances en CI, dépendances épinglées, SBOM."
+proprietaire = "Un propriétaire métier et un propriétaire technique nommés, distincts du simple auteur si celui-ci quitte l'équipe."
+revue = "Une revue par un pair avant fusion."
+approbation_humaine = "Validation par le propriétaire technique, enregistrée dans la fiche."
+duree_autorisation = "12 mois au plus."
+
+[classes.C3]
+nom = "Application d'entreprise avec lecture du SI ou données personnelles"
+sens = "Toute l'entreprise, ou données personnelles, ou lecture du SI."
+
+[classes.C3.impose]
+deploiement_plateforme = true
+controles = [
+  "gitleaks", "semgrep", "analyse_dependances", "dependances_epinglees", "sbom",
+  "signature_artefact", "deploiement_par_digest", "flux_si_par_passerelle", "journaux",
+]
+approbation = "responsable_habilite_distinct_du_demandeur"
+fiches_decision_signees = 1
+duree_autorisation_mois = 6
+
+[classes.C3.texte]
+controles = "Contrôles de C2 plus signature de l'artefact, déploiement par digest, flux vers le SI uniquement par la passerelle, journaux."
+proprietaire = "Propriétaire métier habilité, distinct du demandeur."
+revue = "Revue humaine du diff et du dossier."
+approbation_humaine = "Une fiche de décision signée par un responsable habilité distinct du demandeur."
+duree_autorisation = "6 mois au plus."
+
+[classes.C4]
+nom = "Application critique, externe ou écrivant dans le SI"
+sens = "Utilisateurs externes, ou écriture dans le SI, ou données sensibles, ou criticité métier critique."
+
+[classes.C4.impose]
+deploiement_plateforme = true
+controles = [
+  "gitleaks", "semgrep", "analyse_dependances", "dependances_epinglees", "sbom",
+  "signature_artefact", "deploiement_par_digest", "flux_si_par_passerelle", "journaux",
+  "dast", "requalification_mensuelle", "plan_de_retrait",
+]
+approbation = "responsable_de_service_et_securite"
+fiches_decision_signees = 2
+duree_autorisation_mois = 3
+
+[classes.C4.texte]
+controles = "Contrôles de C3 plus DAST, test de requalification mensuel, plan de retrait."
+proprietaire = "Propriétaire métier et propriétaire technique, tous deux habilités."
+revue = "Revue humaine du diff et du dossier, par une personne qui n'a pas écrit la demande."
+approbation_humaine = "Deux fiches de décision signées : responsable de service et sécurité (RSSI ou délégué). Les décisions réglementaires (par exemple une analyse d'impact sur la protection des données) restent hors des labs."
+duree_autorisation = "3 mois au plus."

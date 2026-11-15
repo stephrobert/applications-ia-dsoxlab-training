@@ -1,0 +1,10 @@
+{
+  "description": "Claude ends its turn, the tests pass: it may stop.",
+  "event": {
+    "hook_event_name": "Stop",
+    "stop_hook_active": false,
+    "last_assistant_message": "Done: the comment on VAT_RATE is added.",
+    "background_tasks": [],
+    "session_crons": []
+  }
+}

@@ -24,3 +24,10 @@ sections:
       application, écrire son contrat, relire un diff contre une
       spécification, vérifier les dépendances qu'un agent propose, et poser un
       harness.
+  - id: claude-code
+    title: "Claude Code : un mécanisme par lab"
+    description: >-
+      Des exercices sur fichiers fournis, dans un shell local et sans Claude
+      Code : chaque lab isole un mécanisme de Claude Code (un hook, une règle,
+      un serveur, un sous-agent) et prouve sur un simulateur ce qu'il fait et
+      ce qu'il ne fait pas.

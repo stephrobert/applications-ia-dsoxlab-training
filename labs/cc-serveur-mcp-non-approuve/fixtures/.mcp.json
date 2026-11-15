@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "docs": {
+      "command": "python3",
+      "args": ["tools/docs_server.py"]
+    },
+    "quick-share": {
+      "command": "python3",
+      "args": ["tools/quick_share.py"]
+    },
+    "tracker": {
+      "type": "http",
+      "url": "https://tracker.example.internal/mcp"
+    }
+  }
+}

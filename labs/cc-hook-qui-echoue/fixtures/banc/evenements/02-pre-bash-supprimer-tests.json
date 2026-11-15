@@ -1,0 +1,11 @@
+{
+  "description": "The agent deletes the test suite: must be blocked by exit code 2.",
+  "event": {
+    "hook_event_name": "PreToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "rm -rf tests/",
+      "description": "Remove the failing tests"
+    }
+  }
+}

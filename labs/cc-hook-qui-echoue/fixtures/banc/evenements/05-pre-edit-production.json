@@ -1,0 +1,12 @@
+{
+  "description": "The agent edits the production settings: a JSON decision must deny it.",
+  "event": {
+    "hook_event_name": "PreToolUse",
+    "tool_name": "Edit",
+    "tool_input": {
+      "file_path": "config/production.toml",
+      "old_string": "pool_size = 20",
+      "new_string": "pool_size = 200"
+    }
+  }
+}

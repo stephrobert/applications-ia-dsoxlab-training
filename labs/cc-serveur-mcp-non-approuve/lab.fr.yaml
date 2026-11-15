@@ -1,0 +1,16 @@
+title: "Refuser un serveur MCP qu'un dépôt déclare sans approbation"
+description: |
+  Une contribution a ajouté un serveur au .mcp.json du dépôt portail-achats,
+  et personne ne l'a approuvé. Repérez-le en comparant .mcp.json à la liste
+  des serveurs approuvés, refusez-le par une règle permissions.deny dans
+  .claude/settings.json pour qu'il reste refusé s'il revient, et gardez les
+  serveurs approuvés et leurs permissions. Un banc hors ligne, qui n'est pas
+  Claude Code, dit quels serveurs seraient chargés ou refusés, et pourquoi.
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/mcp-claude-code/
+criteria:
+  - id: serveur-non-approuve-refuse
+    label: "Le serveur non approuvé est refusé, même quand une contribution le redéclare"
+  - id: serveurs-approuves-conserves
+    label: "Les serveurs approuvés restent chargés avec leur déclaration et leurs permissions, et eux seuls sont chargés"
+  - id: journal-a-jour
+    label: "Le journal du banc correspond aux fichiers actuels et montre le serveur non approuvé refusé par une règle deny"

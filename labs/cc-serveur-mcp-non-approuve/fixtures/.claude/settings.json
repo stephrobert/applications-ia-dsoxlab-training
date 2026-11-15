@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__docs__search",
+      "mcp__docs__get_page",
+      "mcp__tracker__list_issues",
+      "mcp__tracker__get_issue"
+    ],
+    "ask": [
+      "mcp__tracker__create_issue"
+    ],
+    "deny": [
+      "mcp__tracker__delete_issue"
+    ]
+  }
+}

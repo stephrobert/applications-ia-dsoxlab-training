@@ -1,0 +1,13 @@
+{
+  "description": "Claude ends its turn and left a bug in total_ttc: it must go on.",
+  "files": {
+    "facture.py": "\"\"\"Invoice lines and totals for the portail-achats.\"\"\"\n\nfrom __future__ import annotations\n\nVAT_RATE = 0.20\n\n\ndef line_total(quantity: int, unit_price: float) -> float:\n    \"\"\"Total of one invoice line, before tax.\"\"\"\n    if quantity < 0:\n        raise ValueError(\"quantity must be positive\")\n    return round(quantity * unit_price, 2)\n\n\ndef total_ht(lines: list[tuple[int, float]]) -> float:\n    \"\"\"Total of an invoice, before tax.\"\"\"\n    return round(sum(line_total(q, p) for q, p in lines), 2)\n\n\ndef total_ttc(lines: list[tuple[int, float]]) -> float:\n    \"\"\"Total of an invoice, tax included.\"\"\"\n    return round(total_ht(lines) * (1 + VAT_RATE / 2), 2)\n"
+  },
+  "event": {
+    "hook_event_name": "Stop",
+    "stop_hook_active": false,
+    "last_assistant_message": "Done: total_ttc is simplified.",
+    "background_tasks": [],
+    "session_crons": []
+  }
+}

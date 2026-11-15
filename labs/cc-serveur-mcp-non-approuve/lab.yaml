@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: cc-serveur-mcp-non-approuve
+title: "Refuse an MCP server that a repository declares without approval"
+level: l1
+description: |
+  A contribution added a server to the .mcp.json of the portail-achats
+  repository, and nobody approved it. Find it by comparing .mcp.json with the
+  list of approved servers, refuse it with a permissions.deny rule in
+  .claude/settings.json so that it stays refused if it comes back, and keep
+  the approved servers and their permissions. An offline bench, not Claude
+  Code, says which servers would be loaded or refused, and why.
+skills:
+  - claude-code
+  - mcp
+  - permissions
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/mcp-claude-code/
+lab_type: lab
+estimated_time: 30m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - README.md
+    - .mcp.json
+    - .claude/settings.json
+    - docs/mcp-servers.md
+    - tools/docs_server.py
+    - tools/quick_share.py
+    - bench/mcp_bench.py
+    - bench/tools.json
+criteria:
+  - id: serveur-non-approuve-refuse
+    label: "The unapproved server is refused, even when a contribution declares it again"
+    tests:
+      - test_le_serveur_non_approuve_est_refuse
+  - id: serveurs-approuves-conserves
+    label: "The approved servers stay loaded with their declaration and permissions, and only they are loaded"
+    tests:
+      - test_les_serveurs_approuves_sont_conserves
+  - id: journal-a-jour
+    label: "The bench journal matches the current files and shows the unapproved server refused by a deny rule"
+    tests:
+      - test_le_journal_correspond_au_harness_actuel
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false

@@ -24,7 +24,7 @@ repos:
       # Les deux paires de clés de vc-contrat-applicatif sont des clés de LAB,
       # sans valeur, qui servent à signer les décisions simulées.
       - id: detect-private-key
-        exclude: '^labs/vc-contrat-applicatif/fixtures/cles/'
+        exclude: '^labs/(vc-contrat-applicatif|vc-epreuve-classification)/fixtures/cles/'
 
   - repo: local
     hooks:

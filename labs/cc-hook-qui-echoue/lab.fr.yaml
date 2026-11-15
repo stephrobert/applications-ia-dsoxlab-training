@@ -1,0 +1,21 @@
+title: "Éprouver un hook qui réussit, bloque et plante"
+description: |
+  Les hooks d'un projet ont l'air en place et ne protègent rien : la garde
+  plante, le linter ne rapporte à personne, les tests n'arrêtent jamais le
+  tour. Rejouez-les sur un banc de hooks avec des événements PreToolUse,
+  PostToolUse et Stop fixés, lisez leurs codes de sortie (0, 1, 2) et ce que
+  Claude recevrait, puis réparez-les : le code 2 avec stderr pour bloquer ou
+  rapporter, et une permissionDecision JSON en code 0 pour refuser une
+  modification.
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/hooks-claude-code/
+criteria:
+  - id: code-2-bloque
+    label: "La suppression des tests est bloquée par le code 2 avec une raison sur stderr, et les commandes ordinaires passent sans erreur de hook"
+  - id: post-tool-use-rapporte
+    label: "Après un fichier qui a un défaut de style, Claude reçoit le constat du vérificateur ; après un fichier propre, il ne reçoit rien"
+  - id: stop-relance
+    label: "Quand un test échoue, le hook Stop renvoie Claude au travail avec le test en échec ; quand les tests passent, Claude s'arrête"
+  - id: decision-json
+    label: "Modifier ou écrire les réglages de production est refusé par une permissionDecision JSON en code 0, et les autres fichiers restent modifiables"
+  - id: journal-a-jour
+    label: "Le journal du banc correspond aux hooks actuels"

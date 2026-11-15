@@ -1,0 +1,107 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+#
+# Épreuve de fin du niveau 1 (leçon VC-EX-N1 du cadrage, entrée
+# vc-epreuve-classification de travaux_pratiques). Elle remobilise les outils
+# de vc-classifier-applications (grille.toml, classify.py) et de
+# vc-contrat-applicatif (dépôt de politique, valider_fiche.py, barriere.py,
+# clés de lab), copiés à l'identique : rien de neuf à apprendre, tout à
+# appliquer sur une application que personne n'a décrite.
+#
+# `lab_type: challenge` comme les épreuves des autres catalogues : capstone est
+# réservé aux certifications. Seuil 70, comme k8s-epreuve-livrer-et-mettre-a-jour
+# (le cadrage ne fixe pas de seuil). Les points P01 et P02 sont marqués
+# critiques dans le cadrage. P01 se décompose en C1 (la classe retenue) et C2
+# (la fiche fidèle au code), P02 en C4 (une décision signée de la politique
+# autorise) et C5 (sans elle, la barrière reste fermée). C3 (la fiche passe
+# la politique, finalité comprise, D19) est bloquant lui aussi (D28) : une fiche
+# non conforme ne réussit pas l'épreuve. Les cinq tests sont donc bloquants,
+# aucune moyenne ne les compense. dsoxlab note par test, à poids égal : cinq
+# tests, 20 points chacun. Aucun indice (D28, règle F du socle) : le seuil de
+# 70 reste déclaré, comme dans les épreuves Kubernetes.
+#
+# `feedback` n'est pas déclaré : avec un `exam_passing_score`, la politique
+# effective est `verdict`.
+id: vc-epreuve-classification
+title: "Level 1 test: qualify an undocumented application"
+level: l1
+description: |
+  Nobody wrote down what the portail-achats does. Read its code to classify
+  it with the course grid, rewrite the contract its coding agent drafted until
+  it says what the code does and passes the policy, then prepare and sign its
+  decision as the approver, and show that the platform barrier stays shut
+  without it.
+skills:
+  - ai-governance
+  - risk-classification
+  - application-inventory
+  - code-reading
+  - ssh-signature
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/
+lab_type: challenge
+exam_passing_score: 70
+exam_blocking_checks:
+  # P01 (C1, C2) et P02 (C4, C5), critiques dans le cadrage ; C3 par D28.
+  - test_c1_la_classe_retenue_vient_du_critere_le_plus_eleve
+  - test_c2_la_fiche_declare_ce_que_fait_le_code
+  - test_c3_la_fiche_passe_la_politique
+  - test_c4_une_decision_signee_de_la_politique_autorise
+  - test_c5_sans_decision_signee_de_la_politique_le_deploiement_reste_bloque
+estimated_time: 90m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - grille.toml
+    - classify.py
+    - classification.toml
+    - candidat/application.yaml
+    - candidat/schema/application.schema.json
+    - candidat/src/portail/__init__.py
+    - candidat/src/portail/config.py
+    - candidat/src/portail/http.py
+    - candidat/src/portail/erp.py
+    - candidat/src/portail/budgets.py
+    - candidat/src/portail/stockage.py
+    - candidat/src/portail/views.py
+    - accueil/precisions.md
+    - accueil/registre-conservation.md
+    - politique/schemas/application.schema.json
+    - politique/classification.json
+    - politique/demandes.toml
+    - politique/allowed_signers
+    - politique/decisions/README.md
+    - cles/demandeur
+    - cles/demandeur.pub
+    - cles/approbateur
+    - cles/approbateur.pub
+    - plateforme/commun.py
+    - plateforme/valider_fiche.py
+    - plateforme/barriere.py
+criteria:
+  - id: c1-classe-retenue
+    label: "C1 (critical): the application is retained in the class its highest criterion gives, whatever class was requested"
+    tests:
+      - test_c1_la_classe_retenue_vient_du_critere_le_plus_eleve
+  - id: c2-fiche-fidele-au-code
+    label: "C2 (critical): the contract declares every data item kept and every flow to the information system that the code shows, and nothing more"
+    tests:
+      - test_c2_la_fiche_declare_ce_que_fait_le_code
+  - id: c3-fiche-conforme
+    label: "C3 (critical): the contract passes the policy, with its two owners and, for each data item, the retention and purpose of the register"
+    tests:
+      - test_c3_la_fiche_passe_la_politique
+  - id: c4-decision-signee
+    label: "C4 (critical): a signed decision read by the platform authorises the application in the retained class"
+    tests:
+      - test_c4_une_decision_signee_de_la_politique_autorise
+  - id: c5-barriere-fermee
+    label: "C5 (critical): the decision is tied to the contract, and without its signature or outside the policy repository, the deployment stays blocked"
+    tests:
+      - test_c5_sans_decision_signee_de_la_politique_le_deploiement_reste_bloque
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false

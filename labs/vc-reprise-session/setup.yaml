@@ -1,0 +1,60 @@
+---
+# Pose le dépôt du portail-achats au milieu d'une tranche : quatre commits, et
+# le travail non commité de la session interrompue.
+#
+# POURQUOI UN BUNDLE ET UN GIT SÉPARÉ
+#
+# Un dépôt git ne se livre pas en fixture : un chemin qui contient `.git` est
+# refusé par git lui-même, donc absent du catalogue. L'historique voyage dans
+# fixtures/portail-achats.bundle (branche `main` : C1 à C4 ; branche `wip` :
+# le travail non commité). Le clone place la base git À CÔTÉ du projet, dans
+# `.git-portail-achats/`, et `portail-achats/.git` n'est qu'un fichier qui la
+# désigne. Ce répertoire-là ne contient aucun composant `.git` : la solution
+# peut donc y poser des commits par simple copie de fichiers (un pack, l'index
+# et refs/heads/main), ce que fait scripts/valider-labs.py.
+#
+# Idempotent : un second `dsoxlab run` ne touche pas un dépôt déjà posé, il ne
+# retire que le bundle recopié par les fixtures.
+- name: Poser le dépôt du portail-achats au milieu d'une tranche
+  hosts: localhost
+  gather_facts: false
+  vars:
+    bundle: "{{ lab_workdir }}/portail-achats.bundle"
+    projet: "{{ lab_workdir }}/portail-achats"
+    base_git: "{{ lab_workdir }}/.git-portail-achats"
+  tasks:
+    - name: Cloner l'historique (C1 à C4) depuis le bundle
+      ansible.builtin.command:
+        argv:
+          - git
+          - clone
+          - --quiet
+          - --separate-git-dir
+          - "{{ base_git }}"
+          - "{{ bundle }}"
+          - "{{ projet }}"
+        creates: "{{ projet }}"
+      register: clone
+
+    - name: Déposer le travail non commité de la session interrompue
+      when: clone is changed
+      ansible.builtin.command:
+        argv: [git, -C, "{{ projet }}", checkout, origin/wip, --, .]
+      changed_when: true
+
+    - name: Le laisser non commité (ni indexé)
+      when: clone is changed
+      ansible.builtin.command:
+        argv: [git, -C, "{{ projet }}", reset, --quiet]
+      changed_when: true
+
+    - name: Retirer le remote du bundle
+      when: clone is changed
+      ansible.builtin.command:
+        argv: [git, -C, "{{ projet }}", remote, remove, origin]
+      changed_when: true
+
+    - name: Retirer le bundle du répertoire de travail
+      ansible.builtin.file:
+        path: "{{ bundle }}"
+        state: absent
