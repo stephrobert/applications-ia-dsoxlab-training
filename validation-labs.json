@@ -1,4 +1,112 @@
 {
+ "cc-hook-qui-echoue": {
+  "apres": {
+   "echecs": [],
+   "passed": 5,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 5
+  },
+  "avant": {
+   "echecs": [
+    "test_le_code_2_bloque_la_suppression_des_tests",
+    "test_le_journal_correspond_aux_hooks_actuels",
+    "test_post_tool_use_renvoie_le_rapport_a_claude",
+    "test_stop_relance_claude_quand_les_tests_echouent",
+    "test_une_decision_json_refuse_en_code_0"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 5
+  },
+  "date": "2026-11-15",
+  "duree_s": 7,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/5",
+   "après la solution : 5/5",
+   "après clean et run : 0/5",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-cc-hook-qui-echoue.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_le_code_2_bloque_la_suppression_des_tests",
+    "test_le_journal_correspond_aux_hooks_actuels",
+    "test_post_tool_use_renvoie_le_rapport_a_claude",
+    "test_stop_relance_claude_quand_les_tests_echouent",
+    "test_une_decision_json_refuse_en_code_0"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 5
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
+ "cc-serveur-mcp-non-approuve": {
+  "apres": {
+   "echecs": [],
+   "passed": 3,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 3
+  },
+  "avant": {
+   "echecs": [
+    "test_le_journal_correspond_au_harness_actuel",
+    "test_le_serveur_non_approuve_est_refuse",
+    "test_les_serveurs_approuves_sont_conserves"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 3
+  },
+  "date": "2026-11-15",
+  "duree_s": 4,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/3",
+   "après la solution : 3/3",
+   "après clean et run : 0/3",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-cc-serveur-mcp-non-approuve.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_le_journal_correspond_au_harness_actuel",
+    "test_le_serveur_non_approuve_est_refuse",
+    "test_les_serveurs_approuves_sont_conserves"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 3
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
  "vc-boucle-methode": {
   "apres": {
    "echecs": [],
@@ -211,6 +319,50 @@
   "uv": "0.13.8",
   "verdict": "VALIDE"
  },
+ "vc-epreuve-classification": {
+  "apres": {
+   "echecs": [],
+   "passed": 5,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 5
+  },
+  "avant": {
+   "echecs": [],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 5
+  },
+  "date": "2026-11-15",
+  "duree_s": 4,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/5",
+   "après la solution : 5/5",
+   "après clean et run : 0/5",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-epreuve-classification.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 5
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
  "vc-harness-agent-ia": {
   "apres": {
    "echecs": [],
@@ -315,6 +467,60 @@
    "skipped": 0,
    "status": "failed",
    "total": 3
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
+ "vc-reprise-session": {
+  "apres": {
+   "echecs": [],
+   "passed": 4,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 4
+  },
+  "avant": {
+   "echecs": [
+    "test_la_reprise_part_de_l_etat_reel_de_git",
+    "test_la_specification_et_les_tests_faits_sont_inchanges",
+    "test_la_tranche_interrompue_est_terminee_sans_regression",
+    "test_progress_est_a_jour_pour_la_session_suivante"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
+  },
+  "date": "2026-11-15",
+  "duree_s": 12,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/4",
+   "après la solution : 4/4",
+   "après clean et run : 0/4",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-reprise-session.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_la_reprise_part_de_l_etat_reel_de_git",
+    "test_la_specification_et_les_tests_faits_sont_inchanges",
+    "test_la_tranche_interrompue_est_terminee_sans_regression",
+    "test_progress_est_a_jour_pour_la_session_suivante"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
   },
   "uv": "0.13.8",
   "verdict": "VALIDE"
