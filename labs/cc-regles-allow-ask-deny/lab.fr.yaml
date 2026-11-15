@@ -1,0 +1,22 @@
+title: "Faire appliquer des règles allow, ask et deny, au niveau projet et administré"
+description: |
+  L'agent de code du dépôt portail-achats a fait un push forcé sur main :
+  le projet autorise Bash(git *), et sa seule règle deny ne correspond qu'à
+  un texte exact. Écrivez la politique de l'équipe et de l'équipe sécurité :
+  refuser toute forme de push forcé dans le projet sans retirer les règles
+  allow de l'équipe, faire demander tout autre push même là où un allow plus
+  précis correspond, et refuser curl, wget et le dossier secrets/ au niveau
+  administré, que le projet ne peut pas contourner. Un agent simulé hors
+  ligne, qui n'est pas Claude Code, dit ce que décident les règles fusionnées
+  pour chaque action. Ce lab prouve la lecture des règles, pas leur effet
+  dans une vraie session.
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/settings-json-avance/
+criteria:
+  - id: deny-l-emporte
+    label: "Toute forme de push forcé est refusée par une règle deny, et l'équipe garde ses règles allow"
+  - id: ask-avant-allow
+    label: "Tout autre push demande d'abord, même là où une règle allow plus précise correspond"
+  - id: administre-prioritaire
+    label: "Le niveau administré refuse curl, wget et secrets/ même quand le projet les autorise"
+  - id: journal-a-jour
+    label: "Le journal de l'agent correspond aux règles actuelles et montre la politique appliquée"

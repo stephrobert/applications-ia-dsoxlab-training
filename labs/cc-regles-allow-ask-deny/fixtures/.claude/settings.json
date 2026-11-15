@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit(./src/**)",
+      "Bash(git *)",
+      "Bash(git push origin feature/*)",
+      "Bash(python3 -m pytest *)",
+      "Bash(curl *)"
+    ],
+    "deny": [
+      "Bash(git push --force)"
+    ],
+    "ask": []
+  }
+}
