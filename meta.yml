@@ -63,3 +63,4 @@ sections:
       - cc-hook-qui-echoue
       - cc-serveur-mcp-non-approuve
       - cc-subagent-relecteur-borne
+      - cc-skill-de-validation

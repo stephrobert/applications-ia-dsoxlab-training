@@ -256,7 +256,13 @@ def poser_solution(lab: Path, journal) -> None:
         # posée dans le répertoire de travail est déchiffrée, l'original reste
         # chiffré. Le mot de passe vient de VAULT_PASSWORD_FILE (la CI) ou du
         # .vault-pass du dépôt (le poste du formateur).
+        #
+        # ansible-vault réécrit le fichier en mode 600 : un script de solution
+        # qui doit être exécutable (une skill qui appelle ses scripts) perdrait
+        # son bit x. Le mode du fichier suivi par git est donc rétabli après
+        # le déchiffrement (mesuré le 2026-11-15, cc-skill-de-validation).
         if fichier.read_bytes().startswith(b"$ANSIBLE_VAULT"):
+            mode = fichier.stat().st_mode & 0o777
             mot_de_passe = os.environ.get("VAULT_PASSWORD_FILE") or str(RACINE / ".vault-pass")
             res = subprocess.run(
                 ["ansible-vault", "decrypt", "--vault-password-file", mot_de_passe, str(destination)],
@@ -264,6 +270,7 @@ def poser_solution(lab: Path, journal) -> None:
             )
             if res.returncode != 0:
                 raise Echec(f"déchiffrement de {fichier.relative_to(source)} impossible : {res.stderr.strip()[-300:]}")
+            destination.chmod(mode | 0o600)
 
     journal.write(f"solution posée : {len(fichiers)} fichier(s)\n")
     for fichier in fichiers:
