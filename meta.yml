@@ -44,5 +44,7 @@ sections:
       dependencies an agent proposes, and set up a harness.
     labs:
       - vc-classifier-applications
+      - vc-contrat-applicatif
       - vc-boucle-methode
       - vc-paquet-inexistant
+      - vc-harness-agent-ia

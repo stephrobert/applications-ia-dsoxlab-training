@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "politique/schemas/application.schema.json",
+  "title": "Application contract (application.yaml) / Fiche applicative (application.yaml)",
+  "description": "Lives in the policy repository, never in the candidate repository. / Vit dans le dépôt de politique, jamais dans le dépôt candidat.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "nom",
+    "genere_par_ia",
+    "proprietaire_metier",
+    "proprietaire_technique",
+    "classe_declaree",
+    "donnees",
+    "flux_si",
+    "utilisateurs",
+    "criticite_metier",
+    "dependances_critiques",
+    "date_creation",
+    "expire_le"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]{3,40}$"
+    },
+    "nom": {
+      "type": "string",
+      "minLength": 1
+    },
+    "genere_par_ia": {
+      "type": "boolean"
+    },
+    "proprietaire_metier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identifiant", "nom"],
+      "properties": {
+        "identifiant": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$"},
+        "nom": {"type": "string", "minLength": 1}
+      }
+    },
+    "proprietaire_technique": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identifiant", "nom"],
+      "properties": {
+        "identifiant": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$"},
+        "nom": {"type": "string", "minLength": 1}
+      }
+    },
+    "classe_declaree": {
+      "enum": ["C1", "C2", "C3", "C4"]
+    },
+    "donnees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["categorie", "description", "conservation_jours"],
+        "properties": {
+          "categorie": {"enum": ["internes", "personnelles", "sensibles"]},
+          "description": {"type": "string", "minLength": 1},
+          "conservation_jours": {"type": "integer", "exclusiveMinimum": 0}
+        }
+      }
+    },
+    "flux_si": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cible", "mode", "operations"],
+        "properties": {
+          "cible": {"type": "string", "minLength": 1},
+          "mode": {"enum": ["lecture", "ecriture"]},
+          "operations": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "utilisateurs": {
+      "enum": ["auteur_seul", "equipe", "toute_entreprise", "externes"]
+    },
+    "criticite_metier": {
+      "enum": ["aucune", "utile", "importante", "critique"]
+    },
+    "dependances_critiques": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "date_creation": {
+      "type": "string",
+      "format": "date"
+    },
+    "expire_le": {
+      "type": "string",
+      "format": "date"
+    }
+  }
+}
