@@ -38,9 +38,10 @@ read a subset of YAML: one value per line, no `|` or `>` blocks.
 
 1. **Rewrite the contract.** Run `python3 plateforme/valider_fiche.py` and
    fix `candidat/application.yaml` until it is valid. Read `demande/` for
-   the facts: what the portal does, its two owners, the retention of each
-   data item, its critical dependencies. Declare the class the grid gives;
-   `expire_le` stays within the longest authorisation of that class.
+   the facts: what the portal does, its two owners, the retention and the
+   purpose of each data item (`finalite`, at least 10 characters), its
+   critical dependencies. Declare the class the grid gives; `expire_le`
+   stays within the longest authorisation of that class.
 2. **Try to authorise the portal from the candidate repository.** Write a
    decision in `candidat/decisions/`, sign it with `cles/demandeur`, run
    `python3 plateforme/barriere.py portail-achats`, and read its answer.
@@ -64,6 +65,8 @@ read a subset of YAML: one value per line, no `|` or `>` blocks.
 
 - Any change to `application.yaml` after signing breaks the decision: its
   sha256 no longer matches.
+- The GDPR ties a retention period to a purpose: a retention without a
+  purpose says nothing about why the data is kept.
 - `DATE_SIMULEE=YYYY-MM-DD` replaces the date of the day for the barrier.
 - The keys in `cles/` are lab keys: they protect nothing.
 
@@ -75,5 +78,6 @@ dsoxlab check vc-contrat-applicatif
 
 Four checks. They rerun the original platform tools with the original policy
 repository, never the copies in `challenge/work`, and replay what must be
-refused: a contract without an owner or without retention, and your own
+refused: a contract without an owner, a data item without retention or
+without purpose, and your own
 signed decision moved into the candidate repository.

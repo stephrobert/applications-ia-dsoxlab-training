@@ -1,0 +1,6 @@
+{
+  "id": "loyalty-discount",
+  "action": "implement-discount",
+  "file": "src/commandes/discount.py",
+  "request": "Add apply_discount(total, rate_percent) to the order module: the total after a loyalty discount, rate in percent. The tests are in tests/test_discount.py."
+}

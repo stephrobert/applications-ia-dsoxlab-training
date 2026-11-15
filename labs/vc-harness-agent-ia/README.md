@@ -4,7 +4,8 @@ Level 1 lab of the course **Governing and Securing AI-Generated
 Applications**, track "Vibe coding with a method". A new repository of the
 portail-achats has no harness. You write its project instructions, its
 permissions, a PreToolUse hook and its list of approved MCP servers, then
-run a simulated agent: it must fail to read the secret, be refused an
+run a simulated agent: it must fail to read the secret, directly or through
+the shell, be refused an
 unknown MCP server and be blocked when it deletes a test, while its ordinary
 work goes through.
 
@@ -31,7 +32,10 @@ dsoxlab check vc-harness-agent-ia
 - Write project instructions in `AGENTS.md`, and know that they guide an
   agent without stopping it.
 - Refuse the reading of a secret with a `permissions.deny` rule, without
-  deleting the secret.
+  deleting the secret, and close the shell path that a `Read` rule leaves
+  open.
+- Know that neither a hook nor a `Bash` rule is a security boundary, and
+  that the sandbox is.
 - Write a PreToolUse hook that reads the call on stdin and blocks it with
   exit code 2, without blocking the legitimate work.
 - Keep the MCP servers of a project to an approved list.

@@ -27,8 +27,9 @@ contrôles l'y lisent : une règle qui change ne touche que ce fichier.
 
 ## Ce que vous saurez faire
 
-- Rédiger une fiche applicative qui nomme ses propriétaires, ses données et
-  leur durée de conservation, ses flux et ses dépendances critiques.
+- Rédiger une fiche applicative qui nomme ses propriétaires, ses données avec
+  leur finalité et leur durée de conservation, ses flux et ses dépendances
+  critiques.
 - La valider avec le schéma du dépôt de politique, jamais avec un schéma
   qu'apporte le dépôt candidat.
 - Expliquer pourquoi une décision posée dans le dépôt candidat n'autorise

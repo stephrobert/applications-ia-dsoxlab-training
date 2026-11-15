@@ -1,0 +1,18 @@
+title: "Transformer une demande métier en critères vérifiables et la faire implémenter par un agent"
+description: |
+  La responsable des achats demande, en prose, une règle de validation dans
+  le portail-achats. Écrivez les exigences et les critères d'acceptation
+  dans SPEC.md, les tests qui les prouvent, et un plan en tranches qui dit
+  quels fichiers l'agent peut modifier. Lancez ensuite un agent simulé : il
+  doit implémenter le changement sans réécrire la spécification, sans
+  affaiblir les tests et sans toucher à un autre module.
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/
+criteria:
+  - id: criteres-verifiables
+    label: "Chaque critère d'acceptation est relié à un test qui échoue avant l'implémentation et réussit avec celle de l'agent"
+  - id: exigences-couvertes
+    label: "Chaque règle de la demande, y compris celle qu'elle ne dit qu'implicitement, a un test qui échoue quand la règle est cassée"
+  - id: exigences-intactes
+    label: "La spécification et les tests sont identiques avant et après le passage de l'agent"
+  - id: perimetre-du-plan
+    label: "L'agent ne modifie que les fichiers que le plan autorise, et ses autres tentatives sont refusées et consignées"

@@ -4,7 +4,8 @@ Lab de niveau 1 de la formation **Sécuriser et gouverner les applications
 générées par IA**, parcours « Vibe coder avec méthode ». Un nouveau dépôt du
 portail-achats n'a aucun harness. Vous écrivez ses instructions de projet,
 ses permissions, un hook PreToolUse et sa liste de serveurs MCP approuvés,
-puis vous lancez un agent simulé : il doit échouer à lire le secret, se voir
+puis vous lancez un agent simulé : il doit échouer à lire le secret,
+directement ou par le shell, se voir
 refuser un serveur MCP inconnu et être bloqué quand il supprime un test,
 pendant que son travail ordinaire passe.
 
@@ -31,7 +32,10 @@ dsoxlab check vc-harness-agent-ia
 - Écrire les instructions d'un projet dans `AGENTS.md`, en sachant qu'elles
   guident un agent sans l'arrêter.
 - Refuser la lecture d'un secret par une règle `permissions.deny`, sans
-  supprimer le secret.
+  supprimer le secret, et fermer le chemin du shell qu'une règle `Read`
+  laisse ouvert.
+- Savoir que ni un hook ni une règle `Bash` ne sont une frontière de
+  sécurité, et que le bac à sable en est une.
 - Écrire un hook PreToolUse qui lit l'appel sur son entrée standard et le
   bloque par le code de sortie 2, sans bloquer le travail légitime.
 - Tenir les serveurs MCP d'un projet à une liste approuvée.

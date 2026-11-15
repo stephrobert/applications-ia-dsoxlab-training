@@ -9,32 +9,49 @@ simulated. The only things it really runs are your PreToolUse hooks.
 
 What it reads, and the subset of each format it applies:
 
-- AGENTS.md: project instructions. Loaded and recorded, never obeyed: this
-  agent does whatever its scenario says. A CLAUDE.md that contains the line
-  `@AGENTS.md` is recorded as importing it.
-- .claude/settings.json, key `hooks.PreToolUse`: a list of
-  `{"matcher": ..., "hooks": [{"type": "command", "command": ...}]}`. The
-  matcher is a regular expression on the tool name ("" or "*" = every tool).
+- Project instructions. AGENTS.md is loaded on its own only when there is no
+  CLAUDE.md, .claude/CLAUDE.md or CLAUDE.local.md. When one of them exists,
+  AGENTS.md is loaded only if one of them imports it with `@AGENTS.md`. The
+  instructions are recorded, never obeyed: this agent does whatever its
+  scenario says.
+- .claude/settings.json, `hooks.PreToolUse`: a list of
+  `{"matcher": ..., "hooks": [{"type": "command", "command": ...}]}`.
+  Matcher: "*", empty or absent = every tool. Made only of letters, digits,
+  `_`, `-`, spaces, commas and `|` = an exact tool name or a list
+  (`Edit|Write`). Anything else = a regular expression searched anywhere in
+  the tool name (`Edit.*` also catches NotebookEdit; write `^Edit$`).
   Each command runs through the shell, from the project root, with
-  CLAUDE_PROJECT_DIR set and a JSON object on stdin
-  (`hook_event_name`, `tool_name`, `tool_input`, `cwd`). Exit code 2 blocks
-  the action and stderr is the reason. Exit code 0 lets it go on. Any other
-  code is reported and the action goes on. JSON output is not read.
-- .claude/settings.json, keys `permissions.deny` and `permissions.allow`:
-  rules `Tool` or `Tool(pattern)`. Read(path) and Edit(path) take a path
-  relative to the project (`./secrets/**`, `tests/*.py`, `*` inside one directory,
-  `**` across directories). Bash(command) is an exact command, a prefix when
-  it ends with `:*`, or a glob when it contains `*`. `mcp__server` or
-  `mcp__server__tool` for MCP tools. Deny wins over allow. Without a matching
-  allow rule the action still goes through: a real agent may ask you first.
-- .mcp.json, key `mcpServers`: the MCP servers of the project. A call to
-  `mcp__<server>__<tool>` is refused when <server> is not declared there with
-  a `command` or a `url`. The servers are never started.
+  CLAUDE_PROJECT_DIR set to the project root and the call as JSON on stdin.
+  Exit code 2 blocks the action and stderr is the reason. Exit code 0 lets it
+  go on. Any other code is reported and the action goes on. The JSON output
+  of a hook is not read.
+- .claude/settings.json, `permissions.deny`, `permissions.ask`,
+  `permissions.allow`: evaluated in that order, the first matching rule
+  decides, and an allow never makes an exception to a deny. A deny still
+  applies after a hook let the action go on.
+  * `Read(path)` also covers Grep and Glob; `Edit(path)` also covers Write
+    and NotebookEdit. `//path` is absolute, `~/path` is in your home
+    directory, `/path` is relative to the project root, `./path` or `path`
+    is relative to the current directory (here, the project root). `*` stays
+    inside one directory, `**` crosses directories.
+  * `Bash(command)`: `*` stands for any text. A pattern ending with ` *`
+    (or `:*`, the same thing, only at the end) also accepts the bare
+    command: `Bash(ls *)` accepts `ls` and `ls -la`, not `lsof`. Without a
+    star the command must be exactly the same. A rule matches the TEXT of
+    the command, nothing more.
+  * `mcp__server`, `mcp__server__tool`, and a star after a literal prefix
+    (`mcp__docs__get_*`, `mcp__*`). A `mcp__` rule with parentheses is
+    ignored.
+  Without any matching rule the action goes through, with a note: a real
+  agent may ask you first. An `ask` rule is a refusal here: nobody answers.
+- .mcp.json, `mcpServers`: a call to `mcp__<server>__<tool>` is refused when
+  <server> is not declared there with a `command` or a `url`. The servers are
+  never started.
 
-Order of the checks for one action: PreToolUse hooks, then deny rules, then
-the MCP server list, then allow rules. Not simulated: permission modes, `ask`
-rules, settings.local.json and user settings, JSON decisions of hooks, other
-hook events, MCP approval prompts, and everything else a real agent does.
+Order of the checks for one action: PreToolUse hooks, then deny, ask and the
+MCP server list, then allow. Not simulated: permission modes, the sandbox,
+settings.local.json and user settings, JSON decisions of hooks, other hook
+events, MCP approval prompts, and everything else a real agent does.
 
     python3 agent/agent.py                   # from the project root
     python3 agent/agent.py --project DIR --scenario FILE --journal FILE
@@ -46,7 +63,6 @@ harness file cannot be read. Standard library only (Python 3.11 or later).
 from __future__ import annotations
 
 import argparse
-import fnmatch
 import json
 import os
 import re
@@ -56,6 +72,12 @@ from pathlib import Path
 from typing import Any
 
 HOOK_TIMEOUT = 20
+RULE_KINDS = ("deny", "ask", "allow")
+# The tools a path rule covers, by the tool name written in the rule.
+PATH_RULE_TOOLS = {"Read": ("Read", "Grep", "Glob"), "Edit": ("Edit", "Write", "NotebookEdit")}
+INSTRUCTION_FILES = ("CLAUDE.md", ".claude/CLAUDE.md", "CLAUDE.local.md")
+IMPORT_AGENTS = re.compile(r"(^|\s)@(\./)?AGENTS\.md(\s|$)", re.M)
+SIMPLE_MATCHER = re.compile(r"[A-Za-z0-9_\- ,|]*")
 
 
 class HarnessError(Exception):
@@ -71,6 +93,29 @@ def read_json(path: Path) -> Any:
         raise HarnessError(f"{path.name}: not valid JSON ({error})") from error
 
 
+def load_instructions(project: Path) -> tuple[list[dict[str, Any]], str | None]:
+    """Return (loaded files, reason why AGENTS.md was skipped, if it was)."""
+    loaded = []
+    importers = []
+    for name in INSTRUCTION_FILES:
+        path = project / name
+        if path.is_file():
+            text = path.read_text(encoding="utf-8", errors="replace")
+            imports = bool(IMPORT_AGENTS.search(text))
+            loaded.append({"file": name, "imports_agents_md": imports})
+            importers.append(imports)
+    skipped = None
+    agents = project / "AGENTS.md"
+    if agents.is_file():
+        if not importers or any(importers):
+            how = "imported with @AGENTS.md" if importers else "read natively (no CLAUDE.md)"
+            loaded.append({"file": "AGENTS.md", "how": how})
+        else:
+            skipped = ("AGENTS.md not loaded: "
+                       f"{', '.join(i['file'] for i in loaded)} exists without @AGENTS.md")
+    return loaded, skipped
+
+
 def load_harness(project: Path) -> dict[str, Any]:
     settings = read_json(project / ".claude" / "settings.json") or {}
     if not isinstance(settings, dict):
@@ -79,7 +124,7 @@ def load_harness(project: Path) -> dict[str, Any]:
     if not isinstance(permissions, dict):
         raise HarnessError(".claude/settings.json: `permissions` must be an object")
     rules = {}
-    for kind in ("deny", "allow"):
+    for kind in RULE_KINDS:
         value = permissions.get(kind) or []
         if not isinstance(value, list) or not all(isinstance(r, str) for r in value):
             raise HarnessError(f".claude/settings.json: `permissions.{kind}` must be a list of strings")
@@ -95,22 +140,12 @@ def load_harness(project: Path) -> dict[str, Any]:
             raise HarnessError(".mcp.json: `mcpServers` must be an object")
         servers = mcp.get("mcpServers", {})
 
-    instructions = []
-    agents = project / "AGENTS.md"
-    if agents.is_file():
-        text = agents.read_text(encoding="utf-8", errors="replace")
-        instructions.append({"file": "AGENTS.md", "lines": len([x for x in text.splitlines() if x.strip()])})
-    claude = project / "CLAUDE.md"
-    if claude.is_file():
-        text = claude.read_text(encoding="utf-8", errors="replace")
-        imports = "@AGENTS.md" in [x.strip() for x in text.splitlines()]
-        instructions.append({"file": "CLAUDE.md", "imports_agents_md": imports,
-                             "lines": len([x for x in text.splitlines() if x.strip()])})
-    return {"deny": rules["deny"], "allow": rules["allow"], "hooks": hooks,
-            "servers": servers, "instructions": instructions}
+    instructions, skipped = load_instructions(project)
+    return {**rules, "hooks": hooks, "servers": servers,
+            "instructions": instructions, "instructions_skipped": skipped}
 
 
-def path_glob(pattern: str) -> re.Pattern[str]:
+def gitignore_glob(pattern: str) -> re.Pattern[str]:
     """`**` crosses directories, `*` and `?` stay inside one."""
     out = ""
     i = 0
@@ -133,64 +168,84 @@ def path_glob(pattern: str) -> re.Pattern[str]:
     return re.compile(out + r"\Z")
 
 
-def relative(project: Path, file_path: str) -> str:
-    path = Path(file_path)
-    if not path.is_absolute():
-        path = project / path
+def path_matches(pattern: str, target: Path, project: Path) -> bool:
+    if pattern.startswith("//"):
+        base, rest = Path("/"), pattern[2:]
+    elif pattern.startswith("~/"):
+        base, rest = Path.home(), pattern[2:]
+    elif pattern.startswith("/"):
+        base, rest = project, pattern[1:]
+    else:
+        # The current directory of this agent is the project root.
+        base, rest = project, pattern[2:] if pattern.startswith("./") else pattern
     try:
-        return path.resolve().relative_to(project.resolve()).as_posix()
+        relative = target.resolve().relative_to(base.resolve()).as_posix()
     except ValueError:
-        return path.as_posix()
+        return False
+    return bool(gitignore_glob(rest).match(relative))
+
+
+def star_pattern(pattern: str) -> re.Pattern[str]:
+    """`*` stands for any text; a trailing ` *` also accepts the bare command."""
+    optional_tail = pattern.endswith(" *")
+    body = pattern[:-2] if optional_tail else pattern
+    regex = ".*".join(re.escape(part) for part in body.split("*"))
+    return re.compile(regex + ("(?: .*)?" if optional_tail else "") + r"\Z", re.S)
 
 
 def rule_matches(rule: str, tool: str, tool_input: dict[str, Any], project: Path) -> bool:
-    match = re.fullmatch(r"([A-Za-z0-9_\-]+)(?:\((.*)\))?", rule.strip(), re.S)
+    match = re.fullmatch(r"([A-Za-z0-9_\-*]+)(?:\((.*)\))?", rule.strip(), re.S)
     if not match:
         return False
     name, pattern = match.group(1), match.group(2)
     if name.startswith("mcp__"):
-        if pattern is not None:
+        if pattern is not None or not tool.startswith("mcp__"):
             return False
-        if name.endswith("__*"):
-            name = name[:-3]
+        if "*" in name:
+            return bool(star_pattern(name).match(tool))
         return tool == name or tool.startswith(name + "__")
-    if name != tool:
+    if tool not in PATH_RULE_TOOLS.get(name, (name,)):
         return False
     if pattern is None or pattern in ("", "*"):
         return True
-    if tool in ("Read", "Edit"):
-        target = relative(project, str(tool_input.get("file_path", "")))
-        cleaned = pattern[2:] if pattern.startswith("./") else pattern
-        return bool(path_glob(cleaned).match(target))
-    if tool == "Bash":
-        command = str(tool_input.get("command", "")).strip()
+    if name in PATH_RULE_TOOLS:
+        target = tool_input.get("file_path") or tool_input.get("path") or ""
+        return bool(target) and path_matches(pattern, Path(target), project)
+    if name == "Bash":
         if pattern.endswith(":*"):
-            return command.startswith(pattern[:-2])
-        if "*" in pattern:
-            return fnmatch.fnmatchcase(command, pattern)
-        return command == pattern
+            pattern = pattern[:-2] + " *"
+        return bool(star_pattern(pattern).match(str(tool_input.get("command", "")).strip()))
     return False
 
 
 def matcher_matches(matcher: Any, tool: str) -> bool:
     if matcher in (None, "", "*"):
         return True
+    matcher = str(matcher)
+    if SIMPLE_MATCHER.fullmatch(matcher):
+        names = [n.strip() for n in re.split(r"[|,]", matcher)]
+        return tool in names
     try:
-        return re.fullmatch(str(matcher), tool) is not None
+        return re.search(matcher, tool) is not None
     except re.error:
         return False
 
 
 def run_hooks(harness: dict[str, Any], tool: str, tool_input: dict[str, Any],
-              project: Path) -> tuple[dict[str, Any] | None, list[dict[str, Any]]]:
+              project: Path, number: int) -> tuple[dict[str, Any] | None, list[dict[str, Any]]]:
     """Run every matching PreToolUse hook. Return (blocking hook, all runs)."""
     runs = []
     payload = json.dumps({
-        "session_id": "simulated",
-        "hook_event_name": "PreToolUse",
+        "session_id": "sim-0000-session",
+        "prompt_id": "sim-0000-prompt",
+        "transcript_path": str(project / "agent" / "simulated-transcript.jsonl"),
         "cwd": str(project),
+        "permission_mode": "default",
+        "effort": {"level": "medium"},
+        "hook_event_name": "PreToolUse",
         "tool_name": tool,
         "tool_input": tool_input,
+        "tool_use_id": f"toolu_sim_{number:03d}",
     })
     env = dict(os.environ, CLAUDE_PROJECT_DIR=str(project))
     for group in harness["hooks"]:
@@ -218,24 +273,35 @@ def run_hooks(harness: dict[str, Any], tool: str, tool_input: dict[str, Any],
     return None, runs
 
 
-def decide(action: dict[str, Any], harness: dict[str, Any], project: Path) -> dict[str, Any]:
+def first_rule(harness: dict[str, Any], kind: str, tool: str, tool_input: dict[str, Any],
+               project: Path) -> str | None:
+    return next((r for r in harness[kind] if rule_matches(r, tool, tool_input, project)), None)
+
+
+def decide(number: int, action: dict[str, Any], harness: dict[str, Any], project: Path
+           ) -> dict[str, Any]:
     tool = str(action["tool"])
     tool_input = dict(action.get("input") or {})
-    if "file_path" in tool_input:
-        tool_input["file_path"] = str((project / tool_input["file_path"]).resolve())
+    for key in ("file_path", "path"):
+        if key in tool_input:
+            tool_input[key] = str((project / tool_input[key]).resolve())
     entry: dict[str, Any] = {"id": action.get("id"), "tool": tool, "input": action.get("input") or {}}
 
-    blocking, runs = run_hooks(harness, tool, tool_input, project)
+    blocking, runs = run_hooks(harness, tool, tool_input, project, number)
     if runs:
         entry["hooks"] = runs
     if blocking:
         return {**entry, "decision": "refused", "cause": "hook",
                 "detail": f"PreToolUse hook exited with 2: {blocking['stderr'] or '(no message)'}"}
 
-    for rule in harness["deny"]:
-        if rule_matches(rule, tool, tool_input, project):
-            return {**entry, "decision": "refused", "cause": "deny-rule",
-                    "detail": f"permissions.deny: {rule}"}
+    rule = first_rule(harness, "deny", tool, tool_input, project)
+    if rule:
+        return {**entry, "decision": "refused", "cause": "deny-rule",
+                "detail": f"permissions.deny: {rule}"}
+    rule = first_rule(harness, "ask", tool, tool_input, project)
+    if rule:
+        return {**entry, "decision": "refused", "cause": "ask-rule",
+                "detail": f"permissions.ask: {rule} (a real agent would ask you; nobody answers here)"}
 
     if tool.startswith("mcp__"):
         server = tool[len("mcp__"):].split("__", 1)[0]
@@ -244,9 +310,8 @@ def decide(action: dict[str, Any], harness: dict[str, Any], project: Path) -> di
             return {**entry, "decision": "refused", "cause": "mcp-not-declared",
                     "detail": f"MCP server `{server}` is not declared in .mcp.json"}
 
-    allow = next((r for r in harness["allow"] if rule_matches(r, tool, tool_input, project)), None)
+    allow = first_rule(harness, "allow", tool, tool_input, project)
     detail = f"permissions.allow: {allow}" if allow else "no allow rule (a real agent may ask you first)"
-
     if tool == "Read" and not Path(tool_input.get("file_path", "")).is_file():
         return {**entry, "decision": "failed", "cause": "not-found",
                 "detail": f"{action['input'].get('file_path')} does not exist"}
@@ -271,10 +336,11 @@ def main() -> int:
         print(f"agent: cannot start: {error}", file=sys.stderr)
         return 2
 
-    actions = [decide(a, harness, project) for a in scenario["actions"]]
+    actions = [decide(n, a, harness, project) for n, a in enumerate(scenario["actions"], 1)]
     journal = {
         "agent": "simulated agent of the lab vc-harness-agent-ia (not Claude Code)",
         "instructions": harness["instructions"],
+        "instructions_skipped": harness["instructions_skipped"],
         "mcp_servers": sorted(harness["servers"]),
         "actions": actions,
     }
@@ -283,6 +349,8 @@ def main() -> int:
 
     loaded = ", ".join(i["file"] for i in harness["instructions"]) or "none"
     print(f"instructions loaded: {loaded}")
+    if harness["instructions_skipped"]:
+        print(harness["instructions_skipped"])
     for a in actions:
         print(f"{a['decision'].upper():8} {a['id']:<16} {a['tool']:<26} {a['detail']}")
     print(f"journal: {journal_path}")

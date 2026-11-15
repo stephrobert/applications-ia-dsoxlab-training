@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: vc-contexte-agent
+title: "Design the context of a coding agent and check what it really loaded"
+level: l1
+description: |
+  The portail-achats gives its agent everything in one CLAUDE.md, including
+  a change log of several thousand lines. Compare this configuration with
+  your own on the same task: a short CLAUDE.md with a test command that
+  works, a rule on amounts loaded only for the order module, and the big
+  document cited by its path instead of imported. A simulated, deterministic
+  agent logs what it loaded and why.
+skills:
+  - vibe-coding
+  - agent-context
+  - claude-md
+  - path-scoped-rules
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/
+lab_type: lab
+estimated_time: 45m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - README.md
+    - CLAUDE.md
+    - pytest.ini
+    - src/commandes/__init__.py
+    - src/commandes/totals.py
+    - src/rapports/__init__.py
+    - src/rapports/monthly.py
+    - tests/test_totals.py
+    - tests/test_discount.py
+    - docs/architecture.md
+    - docs/erp-history.md
+    - agent/agent.py
+    - agent/task.json
+    - agent/budget.json
+criteria:
+  - id: regle-ciblee
+    label: "The task on src/commandes/ succeeds, the rule on amounts is loaded only when a file of that folder is touched, and the journal matches the current configuration"
+    tests:
+      - test_la_regle_ciblee_se_charge_pour_son_dossier_et_la_tache_reussit
+  - id: document-a-la-demande
+    label: "The large off-topic document is still there, cited by its path, and loaded neither at startup nor for the task"
+    tests:
+      - test_le_document_volumineux_est_cite_sans_etre_charge
+  - id: budget-de-demarrage
+    label: "The startup context, CLAUDE.md and its imports, fits in the line budget"
+    tests:
+      - test_le_contexte_de_demarrage_tient_dans_le_budget
+  - id: commande-de-test
+    label: "The test command written in CLAUDE.md exits with 0, and fails when a test of the project fails"
+    tests:
+      - test_la_commande_de_test_ecrite_dans_claude_md_fonctionne
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false

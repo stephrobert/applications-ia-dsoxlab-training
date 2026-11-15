@@ -119,8 +119,23 @@ def _variante(tmp_path: Path, nom: str, fiche: dict[str, Any]) -> dict[str, Any]
     return _valider(chemin)
 
 
+REQUIS = re.compile(r"^\$(?:\.(?P<chemin>[^:]*))?: '(?P<champ>[^']+)' is a required property$")
+
+
+def _chemin(erreur: str) -> str:
+    """Le champ visé par une erreur, quelle que soit la forme du message.
+
+    Un champ absent s'écrit comme jsonschema, `$.donnees[0]: 'finalite' is a
+    required property` ; les autres refus commencent par le chemin du champ.
+    """
+    requis = REQUIS.match(erreur)
+    if requis:
+        return ".".join(p for p in (requis["chemin"], requis["champ"]) if p)
+    return erreur.split(":", 1)[0]
+
+
 def _erreurs(resultat: dict[str, Any], prefixe: str) -> list[str]:
-    return [e for e in resultat.get("erreurs", []) if e.startswith(prefixe)]
+    return [e for e in resultat.get("erreurs", []) if _chemin(e).startswith(prefixe)]
 
 
 @pytest.fixture(scope="module")
@@ -215,7 +230,7 @@ def test_la_fiche_nomme_ses_proprietaires(
         )
 
 
-def test_chaque_donnee_a_sa_duree_de_conservation(
+def test_chaque_donnee_a_sa_conservation_et_sa_finalite(
     validation: dict[str, Any], tmp_path: Path
 ) -> None:
     erreurs = _erreurs(validation, "donnees")
@@ -240,15 +255,36 @@ def test_chaque_donnee_a_sa_duree_de_conservation(
             "(demande/precisions.md).",
         )
 
+    # Les refus se rejouent sur la fiche de l'apprenant elle-même.
     premiere = dict(donnees[0])
-    retiree = {**fiche, "donnees": [{k: v for k, v in premiere.items()
-                                      if k != "conservation_jours"}, *donnees[1:]]}
-    nulle = {**fiche, "donnees": [{**premiere, "conservation_jours": 0}, *donnees[1:]]}
-    for nom, variante in (("absente", retiree), ("nulle", nulle)):
-        assert _erreurs(_variante(tmp_path, nom, variante), "donnees[0]"), message(
-            en=f"A contract whose retention is {nom} is accepted.",
-            fr=f"Une fiche dont la conservation est {nom} est acceptée.",
+
+    def sans(champ: str) -> dict[str, Any]:
+        return {**fiche, "donnees": [{k: v for k, v in premiere.items() if k != champ},
+                                     *donnees[1:]]}
+
+    def avec(champ: str, valeur: object) -> dict[str, Any]:
+        return {**fiche, "donnees": [{**premiere, champ: valeur}, *donnees[1:]]}
+
+    variantes = (
+        ("conservation absente", sans("conservation_jours")),
+        ("conservation nulle", avec("conservation_jours", 0)),
+        ("finalite absente", sans("finalite")),
+        ("finalite trop courte", avec("finalite", "achats")),
+    )
+    for nom, variante in variantes:
+        assert _erreurs(_variante(tmp_path, nom.replace(" ", "-"), variante), "donnees[0]"), (
+            message(
+                en=f"A contract whose data has its {nom.replace('finalite', 'purpose')} "
+                "is accepted.",
+                fr=f"Une fiche dont la donnée a sa {nom.replace('finalite', 'finalité')} "
+                "est acceptée.",
+            )
         )
+    refus = _variante(tmp_path, "finalite-absente", sans("finalite"))
+    assert "$.donnees[0]: 'finalite' is a required property" in refus["erreurs"], message(
+        en=f"A data item without a purpose is not refused as expected: {refus['erreurs']}",
+        fr=f"Une donnée sans finalité n'est pas refusée comme attendu : {refus['erreurs']}",
+    )
 
 
 # --- P04 ---------------------------------------------------------------------

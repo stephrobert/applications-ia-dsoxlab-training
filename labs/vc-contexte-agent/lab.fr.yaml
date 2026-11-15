@@ -1,0 +1,18 @@
+title: "Concevoir le contexte d'un agent de code et vérifier ce qu'il a vraiment chargé"
+description: |
+  Le portail-achats donne tout à son agent dans un seul CLAUDE.md, y compris
+  un historique de plusieurs milliers de lignes. Comparez cette configuration
+  à la vôtre sur la même tâche : un CLAUDE.md court avec une commande de test
+  qui fonctionne, une règle des montants chargée seulement pour le module des
+  commandes, et le gros document cité par son chemin au lieu d'être importé.
+  Un agent simulé et déterministe consigne ce qu'il a chargé, et pourquoi.
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/
+criteria:
+  - id: regle-ciblee
+    label: "La tâche sur src/commandes/ réussit, la règle des montants ne se charge que quand un fichier de ce dossier est touché, et le journal correspond à la configuration actuelle"
+  - id: document-a-la-demande
+    label: "Le document volumineux hors sujet est toujours là, cité par son chemin, et n'est chargé ni au démarrage ni pour la tâche"
+  - id: budget-de-demarrage
+    label: "Le contexte de démarrage, CLAUDE.md et ses imports, tient dans le budget de lignes"
+  - id: commande-de-test
+    label: "La commande de test écrite dans CLAUDE.md sort en 0, et échoue quand un test du projet échoue"

@@ -7,8 +7,8 @@ description: |
   instructions (AGENTS.md), its permissions and a PreToolUse hook
   (.claude/settings.json) and its list of approved MCP servers (.mcp.json),
   then run a simulated, deterministic agent: it must fail to read the secret,
-  be refused an unknown MCP server and be blocked when it deletes a test,
-  while its ordinary work goes through.
+  directly or through the shell, be refused an unknown MCP server and be
+  blocked when it deletes a test, while its ordinary work goes through.
 skills:
   - vibe-coding
   - agent-harness
@@ -37,6 +37,10 @@ criteria:
     label: "Reading the secret fails, and the secret is still in place"
     tests:
       - test_la_lecture_du_secret_echoue
+  - id: secret-illisible-par-le-shell
+    label: "A shell command that prints the secret is refused, whatever the command"
+    tests:
+      - test_le_secret_ne_se_lit_pas_par_le_shell
   - id: mcp-inconnu-refuse
     label: "A call to an unknown MCP server is refused, and the approved server stays reachable"
     tests:

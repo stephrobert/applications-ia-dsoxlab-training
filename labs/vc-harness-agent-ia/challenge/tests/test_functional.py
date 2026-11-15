@@ -1,4 +1,12 @@
-"""Le harness d'un agent : quatre contrôles, un par point du cadrage et un pour le travail légitime.
+"""Le harness d'un agent : cinq contrôles (P01 à P03, le secret lu par Bash, le travail).
+
+## Pourquoi le secret lu par Bash est un contrôle à part (P05), pas une partie de P01
+
+Une règle `Read(...)` en deny ne couvre pas `cat` lancé par Bash : c'est une
+limite documentée des permissions. Les deux refus reposent sur deux mécanismes
+distincts (une règle de lecture d'un côté ; un hook ou une règle Bash de
+l'autre), et l'apprenant qui n'a posé que le premier doit lire lequel manque.
+Un contrôle = un état observable : les fondre en un seul cacherait lequel.
 
 ## Ce que ces tests rejouent eux-mêmes
 
@@ -48,6 +56,9 @@ TRAVAIL_LEGITIME = ("read-readme", "edit-code", "run-tests", "clean-build")
 # d'un test, pas une ligne de commande précise.
 VARIANTES_SUPPRESSION = ("git rm -q tests/test_orders.py", "rm -f ./tests/test_orders.py")
 VARIANTE_MCP = "mcp__tracker__create_issue"
+# Une autre commande qui lit le secret : le refus doit viser la lecture du
+# secret par le shell, pas la seule ligne `cat` du scénario.
+VARIANTE_LECTURE_BASH = "head -n 3 ./secrets/erp.ini"
 
 
 @pytest.fixture(scope="module")
@@ -111,6 +122,28 @@ def test_la_lecture_du_secret_echoue(projet: Path, tmp_path: Path) -> None:
         fr=f"La lecture de {FICHIER_PROTEGE} est refusée, mais par `{lecture['cause']}`, pas "
         f"par une règle permissions.deny : {lecture['detail']}.",
     )
+
+
+def test_le_secret_ne_se_lit_pas_par_le_shell(projet: Path, tmp_path: Path) -> None:
+    variante = {"id": "head-secret", "tool": "Bash", "input": {"command": VARIANTE_LECTURE_BASH}}
+    journal = _rejouer(projet, tmp_path, [variante])
+    for identifiant in ("cat-secret", "head-secret"):
+        lecture = _action(journal, identifiant)
+        commande = lecture["input"]["command"]
+        assert lecture["decision"] == "refused", message(
+            en=f"`{commande}` went through: {lecture['detail']}. A Read rule does not "
+            "cover a shell command that prints the file: block it with a PreToolUse "
+            "hook on Bash, or with a Bash rule in permissions.deny.",
+            fr=f"`{commande}` est passée : {lecture['detail']}. Une règle Read ne couvre "
+            "pas une commande shell qui affiche le fichier : bloquez-la par un hook "
+            "PreToolUse sur Bash, ou par une règle Bash dans permissions.deny.",
+        )
+        assert lecture["cause"] in ("hook", "deny-rule"), message(
+            en=f"`{commande}` is refused by `{lecture['cause']}`: {lecture['detail']}. "
+            "An ask rule waits for an answer; here it must be a refusal.",
+            fr=f"`{commande}` est refusée par `{lecture['cause']}` : {lecture['detail']}. "
+            "Une règle ask attend une réponse ; ici il faut un refus.",
+        )
 
 
 def test_un_serveur_mcp_inconnu_est_refuse(projet: Path, tmp_path: Path) -> None:
@@ -177,9 +210,12 @@ def test_le_travail_legitime_passe(projet: Path, tmp_path: Path) -> None:
         fr="AGENTS.md est absent ou vide : le projet n'a pas d'instructions pour son agent.",
     )
     rejoue = _rejouer(projet, tmp_path)
+    ignore = rejoue.get("instructions_skipped") or ""
     assert any(i["file"] == "AGENTS.md" for i in rejoue["instructions"]), message(
-        en="The agent did not load AGENTS.md.",
-        fr="L'agent n'a pas chargé AGENTS.md.",
+        en=f"The agent did not load AGENTS.md. {ignore}. When a CLAUDE.md exists, "
+        "AGENTS.md is read only if CLAUDE.md imports it with a line `@AGENTS.md`.",
+        fr=f"L'agent n'a pas chargé AGENTS.md. {ignore}. Quand un CLAUDE.md existe, "
+        "AGENTS.md n'est lu que si CLAUDE.md l'importe par une ligne `@AGENTS.md`.",
     )
     for identifiant in TRAVAIL_LEGITIME:
         action = _action(rejoue, identifiant)

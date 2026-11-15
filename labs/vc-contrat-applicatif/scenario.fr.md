@@ -39,9 +39,10 @@ lisent un sous-ensemble de YAML : une valeur par ligne, sans bloc `|` ni `>`.
 1. **Reprenez la fiche.** Lancez `python3 plateforme/valider_fiche.py` et
    corrigez `candidat/application.yaml` jusqu'à ce qu'elle soit valide.
    Lisez `demande/` pour les faits : ce que fait le portail, ses deux
-   propriétaires, la conservation de chaque donnée, ses dépendances
-   critiques. Déclarez la classe que donne la grille ; `expire_le` reste
-   dans la durée d'autorisation maximale de cette classe.
+   propriétaires, la conservation et la finalité de chaque donnée
+   (`finalite`, 10 caractères au moins), ses dépendances critiques.
+   Déclarez la classe que donne la grille ; `expire_le` reste dans la durée
+   d'autorisation maximale de cette classe.
 2. **Tentez d'autoriser le portail depuis le dépôt candidat.** Écrivez une
    décision dans `candidat/decisions/`, signez-la avec `cles/demandeur`,
    lancez `python3 plateforme/barriere.py portail-achats` et lisez sa
@@ -65,6 +66,8 @@ lisent un sous-ensemble de YAML : une valeur par ligne, sans bloc `|` ni `>`.
 
 - Toute modification de `application.yaml` après la signature casse la
   décision : son empreinte ne correspond plus.
+- Le RGPD lie une durée de conservation à une finalité : une durée sans
+  finalité ne dit pas pourquoi la donnée est gardée.
 - `DATE_SIMULEE=AAAA-MM-JJ` remplace la date du jour pour la barrière.
 - Les clés de `cles/` sont des clés de lab : elles ne protègent rien.
 
@@ -76,6 +79,6 @@ dsoxlab check vc-contrat-applicatif
 
 Quatre contrôles. Ils relancent les outils d'origine de la plateforme avec
 le dépôt de politique d'origine, jamais les copies de `challenge/work`, et
-rejouent ce qui doit être refusé : une fiche sans propriétaire ou sans durée
-de conservation, et votre propre décision signée déplacée dans le dépôt
-candidat.
+rejouent ce qui doit être refusé : une fiche sans propriétaire, une donnée
+sans durée de conservation ou sans finalité, et votre propre décision signée
+déplacée dans le dépôt candidat.
