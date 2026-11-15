@@ -94,7 +94,9 @@ def _appels(fichier: Path, en_plus: list[dict[str, str]]) -> list[dict[str, str]
     return json.loads(fichier.read_text(encoding="utf-8"))["calls"] + en_plus
 
 
-def _rejouer(projet: Path, tmp: Path, en_plus: list[dict[str, str]] | None = None) -> dict[str, Any]:
+def _rejouer(
+    projet: Path, tmp: Path, en_plus: list[dict[str, str]] | None = None
+) -> dict[str, Any]:
     """Relance le banc des fixtures sur une copie du projet, rend son journal."""
     copie = tmp / "projet"
     shutil.copytree(projet, copie, symlinks=True,
@@ -118,7 +120,8 @@ def _inconnus(journal: dict[str, Any]) -> str:
     inconnus = journal.get("unknown_tools") or []
     if not inconnus:
         return ""
-    return f" Unknown tools, they grant nothing / outils inconnus, ils n'accordent rien: {', '.join(inconnus)}."
+    return (" Unknown tools, they grant nothing / outils inconnus, ils n'accordent rien: "
+            f"{', '.join(inconnus)}.")
 
 
 def _autorises(journal: dict[str, Any], prefixes: tuple[str, ...]) -> list[str]:
@@ -161,7 +164,10 @@ def test_les_outils_du_relecteur_sont_explicites(projet: Path) -> None:
     )
     correcteur = projet / AGENTS / "correcteur.md"
     attendu = (FIXTURES / AGENTS / "correcteur.md").read_text(encoding="utf-8")
-    assert correcteur.is_file() and correcteur.read_text(encoding="utf-8").strip() == attendu.strip(), message(
+    intact = correcteur.is_file() and (
+        correcteur.read_text(encoding="utf-8").strip() == attendu.strip()
+    )
+    assert intact, message(
         en="The correcteur subagent changed or disappeared. It applies fixes on request and "
         "keeps its tools: only the relecteur is concerned.",
         fr="Le subagent correcteur a changé ou disparu. Il applique les corrections sur "
