@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: vc-paquet-inexistant
+title: "Check the dependencies an agent proposes before installing them"
+level: l1
+description: |
+  A coding agent proposes three dependencies for the portail-achats. Check
+  each one against the internal registry before installing anything, refuse
+  what cannot be trusted as proposed, and deliver a list pinned by hash that
+  installs offline.
+skills:
+  - vibe-coding
+  - supply-chain
+  - dependency-pinning
+  - pip
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/docs/developper/vibe-coding/
+lab_type: lab
+estimated_time: 30m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - requirements.txt
+    - review.toml
+    - registry/SHA256SUMS
+    - registry/portail_csvkit-0.4.1-py3-none-any.whl
+    - registry/portail_csvkit-0.4.2-py3-none-any.whl
+    - registry/portail_erp_client-3.0.0-py3-none-any.whl
+    - registry/portail_money-1.1.0-py3-none-any.whl
+    - registry/portail_money-1.2.0-py3-none-any.whl
+criteria:
+  - id: registre-seul
+    label: "Only dependencies the internal registry serves remain, and the review records the others with a reason"
+    tests:
+      - test_le_paquet_inexistant_est_detecte_avant_installation
+  - id: tout-epingle
+    label: "Every dependency is pinned to an exact version and to its artifact's hash, and the review records those that were not"
+    tests:
+      - test_une_dependance_non_epinglee_est_refusee
+  - id: installation-hors-ligne
+    label: "The pinned list installs offline from the internal registry, legitimate dependencies included"
+    tests:
+      - test_une_dependance_legitime_et_epinglee_passe
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false

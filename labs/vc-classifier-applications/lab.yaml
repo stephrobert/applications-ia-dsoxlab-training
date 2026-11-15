@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: vc-classifier-applications
+title: "Classify four AI-built applications and apply the policy of their class"
+level: l1
+description: |
+  Four requests, including the portail-achats, each come with the class their
+  requester asks for. Read them against the course grid (data, flows to the
+  information system, users, business criticality: the highest criterion
+  wins), reject the underestimated requests, and apply to each application
+  the policy its class imposes.
+skills:
+  - ai-governance
+  - risk-classification
+  - application-inventory
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/en/docs/ia/applications-generees-par-ia/classer-une-application/
+lab_type: lab
+estimated_time: 45m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - grille.toml
+    - classify.py
+    - classification.toml
+    - demandes/portail-achats.md
+    - demandes/convertisseur-unites.md
+    - demandes/glossaire-achats.md
+    - demandes/reassort-stock.md
+criteria:
+  - id: demande-sous-evaluee
+    label: "Each request is accepted or rejected according to the grid, and the portail-achats is retained at least at the class the grid gives"
+    tests:
+      - test_la_classe_sous_evaluee_est_rejetee
+  - id: politique-par-classe
+    label: "Each application carries the policy of its class, and the policies differ with the risk"
+    tests:
+      - test_la_politique_suit_la_classe
+  - id: critere-le-plus-eleve
+    label: "The class of each application comes from its highest criterion"
+    tests:
+      - test_le_critere_le_plus_eleve_l_emporte
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false

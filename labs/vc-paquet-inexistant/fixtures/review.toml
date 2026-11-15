@@ -1,0 +1,9 @@
+# Review of the dependencies proposed by the agent.
+# Revue des dépendances proposées par l'agent.
+#
+# One [[refused]] block per refused dependency, as proposed by the agent.
+# Un bloc [[refused]] par dépendance refusée, telle que l'agent l'a proposée.
+#
+# [[refused]]
+# package = "name-of-the-package"
+# reason = "why, in one sentence / pourquoi, en une phrase"

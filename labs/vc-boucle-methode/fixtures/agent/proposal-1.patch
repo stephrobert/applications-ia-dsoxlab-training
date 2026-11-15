@@ -1,0 +1,53 @@
+From: coding-agent <agent@portail-achats.example>
+Subject: [PATCH] orders: initial status with manager approval above 5,000 EUR (R3)
+
+Implements requirement R3 of SPEC.md: a new order whose total is above
+the approval threshold starts in pending_approval, otherwise approved.
+Adds two tests, one on each side of the threshold.
+---
+--- a/orders.py
++++ b/orders.py
+@@ -10,6 +10,7 @@
+ from decimal import ROUND_HALF_UP, Decimal
+ 
+ CENT = Decimal("0.01")
++APPROVAL_THRESHOLD = Decimal("5000.00")
+ 
+ 
+ @dataclass(frozen=True)
+@@ -37,3 +38,10 @@
+ def format_eur(amount: Decimal) -> str:
+     """An amount as the portal displays it: 1234.5 -> '1,234.50 EUR'."""
+     return f"{amount:,.2f} EUR"
++
++
++def initial_status(lines: list[Line]) -> str:
++    """Status of a new order (R3): above the threshold, a manager approves it."""
++    if order_total(lines) > APPROVAL_THRESHOLD:
++        return "pending_approval"
++    return "approved"
+--- a/tests/test_orders.py
++++ b/tests/test_orders.py
+@@ -3,7 +3,7 @@
+ from decimal import Decimal
+ 
+ import pytest
+-from orders import Line, order_total
++from orders import Line, initial_status, order_total
+ 
+ 
+ def test_total_sums_lines():
+@@ -19,3 +19,13 @@
+ def test_zero_quantity_refused():
+     with pytest.raises(ValueError):
+         order_total([Line("chair", 0, Decimal("120.00"))])
++
++
++def test_above_threshold_needs_approval():
++    lines = [Line("laptop", 5, Decimal("1000.01"))]
++    assert initial_status(lines) == "pending_approval"
++
++
++def test_at_threshold_approved():
++    lines = [Line("laptop", 5, Decimal("1000.00"))]
++    assert initial_status(lines) == "approved"

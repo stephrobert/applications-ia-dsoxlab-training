@@ -1,0 +1,15 @@
+title: "Classer quatre applications créées avec l'IA et appliquer la politique de leur classe"
+description: |
+  Quatre demandes, dont le portail-achats, arrivent chacune avec la classe
+  que leur demandeur réclame. Lisez-les avec la grille de la formation
+  (données, flux vers le SI, utilisateurs, criticité métier : le critère le
+  plus élevé l'emporte), rejetez les demandes sous-évaluées, et appliquez à
+  chaque application la politique qu'impose sa classe.
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/classer-une-application/
+criteria:
+  - id: demande-sous-evaluee
+    label: "Chaque demande est acceptée ou rejetée selon la grille, et le portail-achats est retenu au moins dans la classe que donne la grille"
+  - id: politique-par-classe
+    label: "Chaque application porte la politique de sa classe, et les politiques varient avec le risque"
+  - id: critere-le-plus-eleve
+    label: "La classe de chaque application vient de son critère le plus élevé"

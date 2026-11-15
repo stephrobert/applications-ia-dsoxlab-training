@@ -1,30 +1,38 @@
-# applications-ia-dsoxlab-training
+# Governing and Securing AI-Generated Applications: verifiable labs
 
 **Language:** [English](./README.md) · [Français](./README.fr.md)
 
-TO FILL IN: one paragraph. What this catalog teaches, and to whom.
+A catalog of **verifiable labs** for the course « Governing and Securing
+AI-Generated Applications » on Stéphane Robert's blog, played by the
+[dsoxlab](https://github.com/stephrobert/dsoxlab) CLI. It is for the CISOs, IT
+directors and managers who decide whether to host an application built with
+AI, the engineers who run it, and the developers who vibe code and want to do
+it with a method. Starting page until the lessons exist:
+[vibe coding](https://www.stephane-robert.info/docs/developper/vibe-coding/) (in French).
 
 ## What it is
 
-TO FILL IN: what a learner can do at the end that they could not do at the
-start. Say it in terms of capability, not of topics covered.
+At the end of level 1, the learner can classify an application by its data,
+its flows, its users and its criticality, and apply the policy of its class.
+They can review an agent's changes against a specification and refuse the one
+that disables a test, and check the dependencies an agent proposes before
+installing them.
 
-Say here why the labs are in this order, if the order matters.
+**No lab calls a real AI service or needs an API key.** The agent and its
+proposals are provided files, deterministic: the same lab gives the same
+result on every machine, with no account and no network.
 
 ## Requirements
 
-TO FILL IN, and be exact: a requirement that is missing from this list costs
-the learner an hour of searching.
+The measured versions are pinned in [`mise.toml`](./mise.toml).
 
 - **Python 3.11+ and [`uv`](https://docs.astral.sh/uv/)**
 - **`git`**
 - **`dsoxlab`**, the engine, installed as a standalone tool (see below).
-- TO FILL IN: the tools the labs need on the machine.
 
-TO FILL IN: whether this catalog has `vm` labs. If it does, name the
-hypervisor, the RAM and the disk the machines need. If it does not, say so:
-`dsoxlab provision` is then never called, and saying it spares the reader a
-question.
+Level 1 has **no `vm` lab**: `dsoxlab provision` is never called, and no network
+access is needed (the package registry of `vc-paquet-inexistant` is a local
+directory).
 
 `dsoxlab doctor` says what this repository needs and what it does not, and
 tells apart a check that failed from one it could not measure.
@@ -87,12 +95,11 @@ engine changes (dsoxlab issue #201):
 
 ### Runtimes
 
-TO FILL IN: one row per runtime this catalog actually uses, and what it asks
-of the machine.
+Level 1 uses the `shell` runtime only.
 
 | Runtime | What the lab asks for |
 |---|---|
-| `shell` | a terminal, and TO FILL IN |
+| `shell` | a terminal, Python 3.11 or later and `git`; nothing else |
 
 ### The validation model
 
@@ -104,8 +111,9 @@ And a lab is proven **in both directions**: the tests must fail before the work
 and pass after it. A test that is green before the work is not a test, it is an
 assumption about the setup.
 
-TO FILL IN: where the reference solutions live, and whether they are encrypted.
-A solution shipped in clear text spoils the lab, and git keeps it forever.
+The reference solutions live in `labs/<id>/solution/` and are **encrypted**
+(ansible-vault). `scripts/valider-labs.py` decrypts them when it lays them in the
+working directory, and records each lab's verdict in `validation-labs.json`.
 
 ### Scoring, hints, progress
 
@@ -120,7 +128,13 @@ lab of what is missing from the machine.
 
 ## Catalog
 
-TO FILL IN: one subsection per section of `meta.yml`, with its labs.
+### Level 1: classify, frame and vibe code with a method
+
+| Lab | What it has you do | Time |
+|---|---|---|
+| [`vc-classifier-applications`](labs/vc-classifier-applications/) | Classify four AI-built applications and apply the policy of their class | 45 min |
+| [`vc-boucle-methode`](labs/vc-boucle-methode/) | Review an agent's changes against a specification and its tests | 40 min |
+| [`vc-paquet-inexistant`](labs/vc-paquet-inexistant/) | Check the dependencies an agent proposes before installing them | 30 min |
 
 ## Contributing
 

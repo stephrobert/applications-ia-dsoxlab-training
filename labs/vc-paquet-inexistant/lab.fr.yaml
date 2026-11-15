@@ -1,0 +1,14 @@
+title: "Vérifier les dépendances qu'un agent propose avant de les installer"
+description: |
+  Un agent de code propose trois dépendances pour le portail-achats.
+  Vérifiez chacune dans le registre interne avant toute installation,
+  refusez ce qui ne peut pas être accepté tel quel, et livrez une liste
+  épinglée par empreinte qui s'installe hors ligne.
+doc_url: https://www.stephane-robert.info/docs/developper/vibe-coding/
+criteria:
+  - id: registre-seul
+    label: "Seules restent les dépendances que sert le registre interne, et la revue consigne les autres avec une raison"
+  - id: tout-epingle
+    label: "Chaque dépendance est épinglée sur une version exacte et sur l'empreinte de son artefact, et la revue consigne celles qui ne l'étaient pas"
+  - id: installation-hors-ligne
+    label: "La liste épinglée s'installe hors ligne depuis le registre interne, dépendances légitimes comprises"

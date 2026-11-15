@@ -1,0 +1,72 @@
+# Your classification of the four requests (demandes/).
+# Votre classification des quatre demandes (demandes/).
+#
+# For each application, fill in / Pour chaque application, remplissez :
+#
+#   criteres          the value of each criterion, a key of grille.toml
+#                     la valeur de chaque critère, une clé de grille.toml
+#   decision_demande  "acceptee" or/ou "rejetee": is the requested class kept?
+#                     la classe demandée est-elle retenue ?
+#   classe_retenue    "C1" to/à "C4"
+#   [politique]       what the retained class imposes (grille.toml, [classes.Cn.impose])
+#                     ce qu'impose la classe retenue
+#
+# classe_demandee is what the requester asked for: do not change it.
+# classe_demandee est ce que le demandeur a demandé : ne la modifiez pas.
+#
+# Check your work / Vérifiez votre travail : python3 classify.py
+
+[applications.portail-achats]
+classe_demandee = "C2"
+decision_demande = ""
+classe_retenue = ""
+
+[applications.portail-achats.criteres]
+donnees = ""
+flux_si = ""
+utilisateurs = ""
+criticite_metier = ""
+
+[applications.portail-achats.politique]
+
+
+[applications.convertisseur-unites]
+classe_demandee = "C1"
+decision_demande = ""
+classe_retenue = ""
+
+[applications.convertisseur-unites.criteres]
+donnees = ""
+flux_si = ""
+utilisateurs = ""
+criticite_metier = ""
+
+[applications.convertisseur-unites.politique]
+
+
+[applications.glossaire-achats]
+classe_demandee = "C2"
+decision_demande = ""
+classe_retenue = ""
+
+[applications.glossaire-achats.criteres]
+donnees = ""
+flux_si = ""
+utilisateurs = ""
+criticite_metier = ""
+
+[applications.glossaire-achats.politique]
+
+
+[applications.reassort-stock]
+classe_demandee = "C2"
+decision_demande = ""
+classe_retenue = ""
+
+[applications.reassort-stock.criteres]
+donnees = ""
+flux_si = ""
+utilisateurs = ""
+criticite_metier = ""
+
+[applications.reassort-stock.politique]
