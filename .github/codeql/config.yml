@@ -1,0 +1,18 @@
+# Configuration CodeQL du catalogue « applications générées par IA ».
+#
+# Reprise de cloud-dsoxlab-training. Les fixtures sont le point de départ des
+# labs : du code d'un « agent » fictif, des propositions de diff, un registre de
+# roues fictives. Certaines sont volontairement fautives (une proposition qui
+# neutralise un test), et les analyser ferait des alertes permanentes sans
+# rien protéger. Les solutions sont chiffrées : CodeQL n'en lirait rien.
+#
+# Restent analysés, et ce sont eux qui peuvent nuire à quelqu'un :
+#
+#   .github/workflows/   les workflows du catalogue lui-même
+#   scripts/             l'outillage de validation des labs
+#   labs/**/challenge/   les tests pytest joués sur la machine de l'apprenant
+name: "Catalogue applications IA, hors fixtures et solutions des labs"
+
+paths-ignore:
+  - "labs/**/fixtures/**"
+  - "labs/**/solution/**"
