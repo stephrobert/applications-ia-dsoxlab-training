@@ -1,0 +1,19 @@
+title: "Épreuve du niveau 1 : qualifier une application non documentée"
+description: |
+  Personne n'a écrit ce que fait le portail-achats. Lisez son code pour le
+  classer avec la grille de la formation, reprenez la fiche que son agent de
+  code a rédigée jusqu'à ce qu'elle dise ce que fait le code et passe la
+  politique, puis préparez et signez sa décision en approbatrice, et montrez
+  que la barrière de la plateforme reste fermée sans elle.
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/
+criteria:
+  - id: c1-classe-retenue
+    label: "C1 (critique) : l'application est retenue dans la classe que donne son critère le plus élevé, quelle que soit la classe demandée"
+  - id: c2-fiche-fidele-au-code
+    label: "C2 (critique) : la fiche déclare chaque donnée conservée et chaque flux vers le SI que montre le code, et rien de plus"
+  - id: c3-fiche-conforme
+    label: "C3 (critique) : la fiche passe la politique, avec ses deux propriétaires et, pour chaque donnée, la durée et la finalité du registre"
+  - id: c4-decision-signee
+    label: "C4 (critique) : une décision signée, lue par la plateforme, autorise l'application dans la classe retenue"
+  - id: c5-barriere-fermee
+    label: "C5 (critique) : la décision est liée à la fiche, et sans sa signature ou hors du dépôt de politique, le déploiement reste bloqué"

@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: cc-hook-qui-echoue
+title: "Test a hook that succeeds, blocks and crashes"
+level: l1
+description: |
+  The hooks of a project look fine and protect nothing: the guard crashes,
+  the linter reports to nobody, the test run never stops the turn. Replay
+  them on a hook bench with fixed PreToolUse, PostToolUse and Stop events,
+  read their exit codes (0, 1, 2) and what Claude would receive, then repair
+  them: exit code 2 with stderr to block or report, and a JSON
+  permissionDecision in exit code 0 to refuse an edit.
+skills:
+  - claude-code
+  - hooks
+  - exit-codes
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/hooks-claude-code/
+lab_type: lab
+estimated_time: 45m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - README.md
+    - facture.py
+    - tests/__init__.py
+    - tests/test_facture.py
+    - config/production.toml
+    - config/developpement.toml
+    - outils/verifier_style.py
+    - .claude/settings.json
+    - .claude/hooks/garde_tests.py
+    - banc/banc_hooks.py
+    - banc/evenements/01-pre-bash-tests-unitaires.json
+    - banc/evenements/02-pre-bash-supprimer-tests.json
+    - banc/evenements/03-pre-bash-nettoyer-build.json
+    - banc/evenements/04-pre-edit-facture.json
+    - banc/evenements/05-pre-edit-production.json
+    - banc/evenements/06-post-write-propre.json
+    - banc/evenements/07-post-write-ligne-longue.json
+    - banc/evenements/08-stop-tests-verts.json
+    - banc/evenements/09-stop-tests-rouges.json
+criteria:
+  - id: code-2-bloque
+    label: "Deleting the tests is blocked by exit code 2 with a reason on stderr, and ordinary commands go on without a hook error"
+    tests:
+      - test_le_code_2_bloque_la_suppression_des_tests
+  - id: post-tool-use-rapporte
+    label: "After a file with a style error, Claude receives the checker's finding; after a clean file, it receives nothing"
+    tests:
+      - test_post_tool_use_renvoie_le_rapport_a_claude
+  - id: stop-relance
+    label: "When a test fails, the Stop hook sends Claude back to work with the failing test; when the tests pass, Claude stops"
+    tests:
+      - test_stop_relance_claude_quand_les_tests_echouent
+  - id: decision-json
+    label: "Editing or writing the production settings is refused by a JSON permissionDecision in exit code 0, and other files stay editable"
+    tests:
+      - test_une_decision_json_refuse_en_code_0
+  - id: journal-a-jour
+    label: "The bench journal matches the current hooks"
+    tests:
+      - test_le_journal_correspond_aux_hooks_actuels
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false

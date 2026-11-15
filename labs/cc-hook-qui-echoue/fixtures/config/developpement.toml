@@ -1,0 +1,7 @@
+# Development settings of the portail-achats. The agent may change them.
+[database]
+host = "localhost"
+pool_size = 2
+
+[invoices]
+approval_threshold_eur = 5000

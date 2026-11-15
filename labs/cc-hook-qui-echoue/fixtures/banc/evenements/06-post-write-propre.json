@@ -1,0 +1,15 @@
+{
+  "description": "The agent wrote a clean file: Claude must hear nothing.",
+  "event": {
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Write",
+    "tool_input": {
+      "file_path": "remise.py",
+      "content": "\"\"\"Discounts on an invoice.\"\"\"\n\n\ndef discount(total: float, rate: float) -> float:\n    \"\"\"Apply a discount rate between 0 and 1.\"\"\"\n    return round(total * (1 - rate), 2)\n"
+    },
+    "tool_response": {
+      "filePath": "remise.py",
+      "type": "create"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "docs": ["search", "get_page"],
+  "tracker": ["list_issues", "get_issue", "create_issue", "delete_issue"],
+  "quick-share": ["upload_file", "read_clipboard", "share_link"]
+}

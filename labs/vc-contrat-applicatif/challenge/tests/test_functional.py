@@ -29,6 +29,7 @@ doit pas repasser au rouge parce que le temps a passé.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -36,7 +37,7 @@ import shutil
 import subprocess
 import sys
 import tomllib
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -302,6 +303,8 @@ CONSEILS = {
          "la décision dure plus longtemps que sa classe ne le permet"),
     15: ("candidat/application.yaml is not the file the decision signed",
          "candidat/application.yaml n'est pas le fichier que la décision a signé"),
+    16: ("the retained class is below the class the grid computes for the contract",
+         "la classe retenue est sous celle que la grille calcule pour la fiche"),
 }
 
 
@@ -334,6 +337,38 @@ def _monter(racine: Path, decisions: list[Path], dans_le_candidat: bool) -> Path
         if signature.is_file():
             shutil.copy2(signature, cible / signature.name)
     return racine
+
+
+def _decision_abaissee(racine: Path, classe: str, jour: str) -> None:
+    """Une décision qui retient `classe`, signée par la décideuse habilitée.
+
+    Tout y est en règle (empreinte de la fiche, signataire d'allowed_signers,
+    rôle, durée), sauf la classe : seule elle peut faire refuser.
+    """
+    debut = date.fromisoformat(jour)
+    empreinte = hashlib.sha256((racine / "candidat" / "application.yaml").read_bytes())
+    decision = racine / "politique" / "decisions" / f"{APP}-{jour}-abaissee.yaml"
+    decision.write_text(yaml.safe_dump({
+        "id": f"{APP}-{jour}-abaissee",
+        "application": APP,
+        "fiche_sha256": empreinte.hexdigest(),
+        "classe_retenue": classe,
+        "decision": "accepte",
+        "risques_acceptes": [],
+        "conditions": [],
+        "demandeur": DEMANDEUR,
+        "decideur": {"identifiant": "m.leroy", "role": "responsable_service"},
+        "date_decision": jour,
+        "expire_le": (debut + timedelta(days=60)).isoformat(),
+    }, sort_keys=False), encoding="utf-8")
+    cle = racine / "cle-approbatrice"
+    shutil.copy2(FIXTURES / "cles" / "approbateur", cle)
+    cle.chmod(0o600)
+    subprocess.run(  # noqa: S603
+        ["ssh-keygen", "-q", "-Y", "sign", "-f", str(cle),  # noqa: S607
+         "-n", "decision-applicative", str(decision)],
+        capture_output=True, check=True, timeout=30,
+    )
 
 
 def _barriere(racine: Path, jour: str) -> dict[str, Any]:
@@ -400,3 +435,21 @@ def test_seul_le_depot_de_politique_autorise(tmp_path: Path) -> None:
         fr=f"Avec classe_declaree abaissée dans la fiche, la barrière répond "
         f"{apres.get('code')}, classe {apres.get('classe_retenue')}.",
     )
+
+    # Une décision en règle qui retient une classe SOUS celle que la grille
+    # calcule pour la fiche : la barrière la refuse (D29), une classe ne
+    # s'abaisse pas par une décision.
+    calculee = _valider(WORKDIR / "candidat" / "application.yaml").get("classe_calculee")
+    if _rang(calculee) > 1:
+        dessous = CLASSES[_rang(calculee) - 2]
+        abaissee = tmp_path / "decision-sous-la-grille"
+        shutil.copytree(POLITIQUE, abaissee / "politique")
+        shutil.copytree(WORKDIR / "candidat", abaissee / "candidat")
+        _decision_abaissee(abaissee, dessous, jour)
+        sous = _barriere(abaissee, jour)
+        assert sous.get("code") == 16 and not sous.get("autorisee"), message(
+            en=f"A signed decision retaining {dessous} for a contract the grid computes "
+            f"{calculee} gets the answer {sous.get('code')}: {sous.get('motif')}",
+            fr=f"Une décision signée qui retient {dessous} pour une fiche que la grille "
+            f"calcule {calculee} reçoit la réponse {sous.get('code')} : {sous.get('motif')}",
+        )

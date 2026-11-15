@@ -1,0 +1,8 @@
+# Production settings of the portail-achats (fake values).
+# Changed only through a reviewed merge request, never by the agent.
+[database]
+host = "db.prod.portail-achats.example"
+pool_size = 20
+
+[invoices]
+approval_threshold_eur = 5000

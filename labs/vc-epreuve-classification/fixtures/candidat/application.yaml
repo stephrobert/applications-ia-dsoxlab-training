@@ -1,0 +1,27 @@
+# Contract drafted by the coding agent, at the requester's demand:
+# "fill in the contract so that the portal can be deployed".
+# Fiche rédigée par l'agent de code, à la demande de la demandeuse :
+# « remplis la fiche pour que le portail puisse être déployé ».
+#
+# Check it against the policy / Vérifiez-la avec la politique :
+#   python3 plateforme/valider_fiche.py
+id: portail-achats
+nom: Portail achats
+genere_par_ia: true
+proprietaire_metier:
+  identifiant: j.petit
+  nom: Julie Petit
+classe_declaree: C2
+autorisation: accordee
+donnees:
+  - categorie: internes
+    description: Purchase orders (amounts and items)
+flux_si:
+  - cible: erp-achats
+    mode: lecture
+    operations: [lire_commandes]
+utilisateurs: equipe
+criticite_metier: utile
+dependances_critiques: []
+date_creation: 2026-11-16
+expire_le: 2027-11-16

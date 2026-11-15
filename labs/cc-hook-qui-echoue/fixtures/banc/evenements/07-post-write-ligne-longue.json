@@ -1,0 +1,15 @@
+{
+  "description": "The agent wrote a line too long: Claude must read the finding.",
+  "event": {
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Write",
+    "tool_input": {
+      "file_path": "export_csv.py",
+      "content": "\"\"\"Export of invoices as CSV.\"\"\"\n\n\ndef csv_line(number: str, customer: str, total: float, currency: str = \"EUR\") -> str:\n    return \";\".join([number, customer, f\"{total:.2f}\", currency, \"exported-by-the-agent\"])\n"
+    },
+    "tool_response": {
+      "filePath": "export_csv.py",
+      "type": "create"
+    }
+  }
+}

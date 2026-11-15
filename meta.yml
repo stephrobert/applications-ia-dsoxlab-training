@@ -47,6 +47,18 @@ sections:
       - vc-contrat-applicatif
       - vc-boucle-methode
       - vc-specification-agent
+      - vc-reprise-session
       - vc-paquet-inexistant
       - vc-contexte-agent
       - vc-harness-agent-ia
+      - vc-epreuve-classification
+  - id: claude-code
+    title: "Claude Code: one mechanism per lab"
+    description: >-
+      Exercises on provided files, in a local shell and without Claude Code:
+      each lab isolates one mechanism of Claude Code (a hook, a rule, a
+      server, a subagent) and proves on a simulator what it does and what it
+      does not do.
+    labs:
+      - cc-hook-qui-echoue
+      - cc-serveur-mcp-non-approuve

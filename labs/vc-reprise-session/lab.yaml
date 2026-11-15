@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: vc-reprise-session
+title: "Resume an interrupted coding session from Git, not from memory"
+level: l1
+description: |
+  A coding session on the portail-achats stopped in the middle of a slice.
+  It left commits, uncommitted work and a progress journal that does not
+  quite match the repository. Start from the real state of Git, decide what
+  to keep and what to discard, finish the slice without touching the
+  specification or the tests of the criteria already done, and leave a
+  journal the next session can trust.
+skills:
+  - vibe-coding
+  - git
+  - specification
+  - acceptance-criteria
+  - pytest
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/agentic-workflow/
+lab_type: lab
+estimated_time: 40m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée. Le bundle est déroulé par
+  # setup.yaml, puis retiré du répertoire de travail.
+  fixtures:
+    - portail-achats.bundle
+criteria:
+  - id: tranche-terminee
+    label: "The criteria in progress pass in the last commit, and the criteria already done still pass"
+    tests:
+      - test_la_tranche_interrompue_est_terminee_sans_regression
+  - id: reprise-depuis-git
+    label: "The history is kept, nothing is left uncommitted, and the journal records what became of each uncommitted file"
+    tests:
+      - test_la_reprise_part_de_l_etat_reel_de_git
+  - id: exigences-intactes
+    label: "SPEC.md and the tests of the criteria already done are identical before and after the resumption"
+    tests:
+      - test_la_specification_et_les_tests_faits_sont_inchanges
+  - id: journal-a-jour
+    label: "PROGRESS.md gives the true state of every criterion, the commit of each one done, and a next action"
+    tests:
+      - test_progress_est_a_jour_pour_la_session_suivante
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false

@@ -1,0 +1,32 @@
+{
+  "description": "Classification grid of the policy repository. Each criterion gives a score from 0 to 3, the highest criterion wins. A class may always be raised; it is only lowered by a written human decision. / Grille de classification du dépôt de politique. Chaque critère donne un score de 0 à 3, le critère le plus élevé l'emporte. Une classe peut toujours être relevée ; elle ne s'abaisse qu'avec une décision humaine écrite.",
+  "criteres": {
+    "donnees": {"aucune": 0, "internes": 1, "personnelles": 2, "sensibles": 3},
+    "flux_si": {"aucun": 0, "lecture": 2, "ecriture": 3},
+    "utilisateurs": {"auteur_seul": 0, "equipe": 1, "toute_entreprise": 2, "externes": 3},
+    "criticite_metier": {"aucune": 0, "utile": 1, "importante": 2, "critique": 3}
+  },
+  "classe_par_score": {"0": "C1", "1": "C2", "2": "C3", "3": "C4"},
+  "classes": {
+    "C1": {
+      "duree_autorisation_mois": 0,
+      "decisions_signees": [],
+      "proprietaire_metier_distinct_du_demandeur": false
+    },
+    "C2": {
+      "duree_autorisation_mois": 12,
+      "decisions_signees": [],
+      "proprietaire_metier_distinct_du_demandeur": false
+    },
+    "C3": {
+      "duree_autorisation_mois": 6,
+      "decisions_signees": ["responsable_service"],
+      "proprietaire_metier_distinct_du_demandeur": true
+    },
+    "C4": {
+      "duree_autorisation_mois": 3,
+      "decisions_signees": ["responsable_service", "securite"],
+      "proprietaire_metier_distinct_du_demandeur": true
+    }
+  }
+}

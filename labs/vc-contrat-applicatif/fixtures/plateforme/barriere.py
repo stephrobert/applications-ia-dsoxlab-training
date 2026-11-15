@@ -19,6 +19,8 @@ Exit codes:
       from security; C1 is not deployed on the platform)
   14  decision expired, or longer than the class allows
   15  application.yaml differs from the one the decision signed
+  16  classe_retenue is below the class the policy grid computes for
+      application.yaml (a class may be raised, never lowered)
   2   a file or ssh-keygen cannot be used
 
 The date of the day can be replaced with the DATE_SIMULEE variable
@@ -44,6 +46,7 @@ from commun import (
     WORK,
     Illisible,
     ajouter_mois,
+    classe_calculee,
     lire_fichier_yaml,
     lire_json,
     lire_toml,
@@ -73,7 +76,7 @@ def signature_valide(fichier: Path, signataire: str, allowed: Path) -> bool:
 
 def examiner(
     fichier: Path, app: str, demandeur: str, empreinte: str, allowed: Path,
-    grille: dict[str, Any], jour: date,
+    grille: dict[str, Any], jour: date, calculee: str | None,
 ) -> dict[str, Any]:
     """One decision: (code, reason). Code 0 = valid on its own."""
     def refus(code: int, motif: str) -> dict[str, Any]:
@@ -99,6 +102,12 @@ def examiner(
     if d["fiche_sha256"] != empreinte:
         return refus(15, "application.yaml is not the one this decision signed")
     classe = d["classe_retenue"]
+    if calculee is None:
+        return refus(16, "the class of application.yaml cannot be computed with the "
+                     "policy grid: run valider_fiche.py")
+    if rang(classe) < rang(calculee):
+        return refus(16, f"classe_retenue {classe} is below {calculee}, the class the "
+                     "policy grid computes for application.yaml")
     mois = grille["classes"].get(classe, {}).get("duree_autorisation_mois")
     try:
         debut = date.fromisoformat(str(d["date_decision"]))
@@ -157,11 +166,20 @@ def main() -> int:
     if not demandeur:
         return rendre(10, "no request recorded for this application")
     empreinte = hashlib.sha256(fiche).hexdigest()
+    # The class is recomputed from the contract with the grid of the POLICY
+    # repository, never taken from classe_declaree: a decision may raise it,
+    # not lower it.
+    try:
+        contenu = lire_fichier_yaml(args.candidat / "application.yaml")
+        calculee = classe_calculee(contenu, grille) if isinstance(contenu, dict) else None
+    except Illisible:
+        calculee = None
 
     fichiers = sorted((args.politique / "decisions").glob(f"{args.application}-*.yaml"))
     if not fichiers:
         return rendre(10, "no decision in the policy repository", fiche_sha256=empreinte)
-    decisions = [examiner(f, args.application, demandeur, empreinte, allowed, grille, jour)
+    decisions = [examiner(f, args.application, demandeur, empreinte, allowed, grille, jour,
+                          calculee)
                  for f in fichiers]
     valides = [d for d in decisions if d["code"] == 0]
     if not valides:
