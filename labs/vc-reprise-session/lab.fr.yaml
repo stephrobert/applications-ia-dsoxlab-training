@@ -6,7 +6,7 @@ description: |
   de Git, décidez de ce que vous gardez et de ce que vous écartez, terminez
   la tranche sans toucher à la spécification ni aux tests des critères déjà
   faits, et laissez un journal auquel la session suivante peut se fier.
-doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/workflow-agentique/
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/
 criteria:
   - id: tranche-terminee
     label: "Les critères en cours passent dans le dernier commit, et les critères déjà faits passent toujours"

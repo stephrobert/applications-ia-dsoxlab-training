@@ -4,7 +4,7 @@ description: |
   portail-achats. Lancez les tests, appliquez le changement conforme à la
   spécification, refusez l'autre en consignant pourquoi, puis rendez la
   nouvelle exigence vérifiable avec un critère d'acceptation relié à un test.
-doc_url: https://www.stephane-robert.info/docs/developper/vibe-coding/
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/boucle-de-travail/
 criteria:
   - id: changement-accepte
     label: "Le changement accepté est appliqué et toute la suite du projet passe"

@@ -11,7 +11,7 @@ et reliez la nouvelle exigence à un test qui attraperait sa régression.
 |---|---|
 | Cible | votre poste : Python 3.11 ou plus, pytest, `patch` ou git. Ni réseau, ni service d'IA, ni clé d'API |
 | Durée | environ 40 minutes |
-| Leçon associée | [Vibe coding](https://www.stephane-robert.info/docs/developper/vibe-coding/) |
+| Leçon associée | [La boucle de travail](https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/boucle-de-travail/) |
 | Suivant | `vc-paquet-inexistant` |
 
 ```bash
