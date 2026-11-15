@@ -1,0 +1,14 @@
+title: "Relire les changements d'un agent face à une spécification et à ses tests"
+description: |
+  Un agent propose deux changements au module des commandes du
+  portail-achats. Lancez les tests, appliquez le changement conforme à la
+  spécification, refusez l'autre en consignant pourquoi, puis rendez la
+  nouvelle exigence vérifiable avec un critère d'acceptation relié à un test.
+doc_url: https://www.stephane-robert.info/docs/developper/vibe-coding/
+criteria:
+  - id: changement-accepte
+    label: "Le changement accepté est appliqué et toute la suite du projet passe"
+  - id: changement-refuse
+    label: "Chaque test d'origine s'exécute et réussit encore, les totaux restent exacts, et le journal de revue consigne le refus avec sa raison"
+  - id: critere-verifiable
+    label: "La nouvelle exigence a un critère d'acceptation relié à un test qui réussit, et qui échoue dès que l'exigence est cassée"

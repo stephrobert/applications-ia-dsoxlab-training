@@ -13,8 +13,10 @@ repos:
       # `end-of-file-fixer` lui retirait sa ligne finale à chaque passage.
       # Mesuré sur sept catalogues neufs : `git status` affichait `M LICENSE`
       # sans qu'aucun humain y ait touché.
+      # Un patch porte des espaces significatifs (ligne de contexte vide = une
+      # espace) : les retirer casse son application.
       - id: trailing-whitespace
-        exclude: '^LICENSE$'
+        exclude: '^LICENSE$|\.(patch|diff)$'
       - id: end-of-file-fixer
         exclude: '^LICENSE$'
       - id: check-yaml

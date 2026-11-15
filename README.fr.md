@@ -1,29 +1,38 @@
-# applications-ia-dsoxlab-training
+# Sécuriser et gouverner les applications générées par IA : les labs vérifiables
 
 **Langue :** [English](./README.md) · [Français](./README.fr.md)
 
-À REMPLIR : un paragraphe. Ce que ce catalogue apprend, et à qui.
+Catalogue de **labs vérifiables** de la formation « Sécuriser et gouverner les
+applications générées par IA » du blog de Stéphane Robert, joué par la CLI
+[dsoxlab](https://github.com/stephrobert/dsoxlab). Il s'adresse aux RSSI, DSI et
+responsables qui décident d'accueillir une application créée avec l'IA, aux
+ingénieurs qui la font tourner, et aux développeurs qui vibe codent et veulent
+le faire avec méthode. Page de départ, en attendant les leçons :
+[vibe coding](https://www.stephane-robert.info/docs/developper/vibe-coding/).
 
 ## Ce que c'est
 
-À REMPLIR : ce qu'un apprenant saura faire à la fin et ne savait pas faire au
-début. Dis-le en capacité, pas en liste de sujets couverts.
+À la fin du niveau 1, l'apprenant sait classer une application selon ses
+données, ses flux, ses utilisateurs et sa criticité, et lui appliquer la
+politique de sa classe. Il sait aussi relire les changements d'un agent face à
+une spécification et refuser celui qui neutralise un test, et vérifier les
+dépendances qu'un agent propose avant de les installer.
 
-Dis ici pourquoi les labs sont dans cet ordre, si l'ordre compte.
+**Aucun lab n'appelle un vrai service d'IA ni n'exige de clé d'API.** L'agent et
+ses propositions sont des fichiers fournis, déterministes : le même lab rend le
+même résultat sur tous les postes, sans compte ni réseau.
 
 ## Prérequis
 
-À REMPLIR, et sois exact : un prérequis absent de cette liste coûte une heure
-de recherche à l'apprenant.
+Les versions mesurées sont épinglées dans [`mise.toml`](./mise.toml).
 
 - **Python 3.11+ et [`uv`](https://docs.astral.sh/uv/)**
 - **`git`**
 - **`dsoxlab`**, le moteur, installé en outil autonome (voir plus bas).
-- À REMPLIR : les outils dont les labs ont besoin sur le poste.
 
-À REMPLIR : si ce catalogue a des labs `vm`, nomme l'hyperviseur, la RAM et le
-disque que les machines demandent. S'il n'en a pas, dis-le : `dsoxlab provision`
-n'est alors jamais appelé, et le dire épargne une question au lecteur.
+Le niveau 1 n'a **aucun lab `vm`** : `dsoxlab provision` n'y est jamais appelé,
+et aucun accès réseau n'est demandé (le registre de paquets de
+`vc-paquet-inexistant` est un répertoire local).
 
 `dsoxlab doctor` dit ce dont ce dépôt a besoin et ce dont il n'a pas besoin, et
 distingue un contrôle qui a échoué d'un contrôle qu'il n'a pas pu mesurer.
@@ -86,12 +95,11 @@ change (issue dsoxlab #201) :
 
 ### Les runtimes
 
-À REMPLIR : une ligne par runtime réellement employé par ce catalogue, et ce
-qu'il demande au poste.
+Le niveau 1 n'emploie que le runtime `shell`.
 
 | Runtime | Ce que le lab demande |
 |---|---|
-| `shell` | un terminal, et À REMPLIR |
+| `shell` | un terminal, Python 3.11 ou plus récent et `git` ; rien d'autre |
 
 ### Le modèle de validation
 
@@ -104,8 +112,10 @@ Et un lab est prouvé **dans les deux sens** : les tests doivent échouer avant
 le travail et passer après. Un test vert avant le travail n'est pas un test,
 c'est une hypothèse sur le setup.
 
-À REMPLIR : où vivent les solutions de référence, et si elles sont chiffrées.
-Une solution livrée en clair gâche le lab, et git la garde pour toujours.
+Les solutions de référence vivent dans `labs/<id>/solution/` et sont
+**chiffrées** (ansible-vault). `scripts/valider-labs.py` les déchiffre au moment
+de les poser dans le répertoire de travail, et inscrit le verdict de chaque lab
+dans `validation-labs.json`.
 
 ### Score, indices, avancement
 
@@ -120,7 +130,13 @@ Un 0 accuserait le lab de ce qui manque au poste.
 
 ## Catalogue
 
-À REMPLIR : une sous-section par section du `meta.yml`, avec ses labs.
+### Niveau 1 : classer, cadrer et vibe coder avec méthode
+
+| Lab | Ce qu'il fait faire | Durée |
+|---|---|---|
+| [`vc-classifier-applications`](labs/vc-classifier-applications/) | Classer quatre applications créées avec l'IA et appliquer la politique de leur classe | 45 min |
+| [`vc-boucle-methode`](labs/vc-boucle-methode/) | Relire les changements d'un agent face à une spécification et à ses tests | 40 min |
+| [`vc-paquet-inexistant`](labs/vc-paquet-inexistant/) | Vérifier les dépendances qu'un agent propose avant de les installer | 30 min |
 
 ## Contribuer
 

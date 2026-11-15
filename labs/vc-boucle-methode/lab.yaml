@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: vc-boucle-methode
+title: "Review an agent's changes against a specification and its tests"
+level: l1
+description: |
+  An agent proposes two changes to the portail-achats order module. Run the
+  tests, apply the change that meets the specification, refuse the one that
+  does not and log why, then make the new requirement verifiable with an
+  acceptance criterion tied to a test.
+skills:
+  - vibe-coding
+  - code-review
+  - pytest
+  - specification
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/docs/developper/vibe-coding/
+lab_type: lab
+estimated_time: 40m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - pytest.ini
+    - SPEC.md
+    - orders.py
+    - tests/test_orders.py
+    - agent/proposal-1.patch
+    - agent/proposal-2.patch
+    - decisions.yaml
+criteria:
+  - id: changement-accepte
+    label: "The accepted change is applied and the whole project suite passes"
+    tests:
+      - test_la_proposition_saine_est_appliquee_et_la_suite_passe
+  - id: changement-refuse
+    label: "Every original test still runs and passes, order totals stay exact, and the review log records the refusal with its reason"
+    tests:
+      - test_la_proposition_qui_neutralise_un_test_est_refusee
+  - id: critere-verifiable
+    label: "The new requirement has an acceptance criterion tied to a test that passes and fails as soon as the requirement is broken"
+    tests:
+      - test_la_specification_porte_un_critere_verifiable
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false

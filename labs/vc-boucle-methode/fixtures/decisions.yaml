@@ -1,0 +1,8 @@
+# Review log of the agent's proposals: one entry per proposal you reviewed.
+#
+# decisions:
+#   - proposal: proposal-N.patch
+#     decision: accepted          # or: refused
+#     reason: why, in one sentence. For a refusal, say precisely what you
+#             refuse (the file, the test, the line).
+decisions: []

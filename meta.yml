@@ -42,4 +42,7 @@ sections:
       Exercises on provided files, in a local shell: classify an application,
       write its contract, review a diff against a specification, check the
       dependencies an agent proposes, and set up a harness.
-    labs: []
+    labs:
+      - vc-classifier-applications
+      - vc-boucle-methode
+      - vc-paquet-inexistant

@@ -1,0 +1,4 @@
+# Dependencies of the CSV export feature, proposed by the coding agent.
+portail-money==1.2.0
+portail-csvkit>=0.4
+portail-erp-sdk==2.3.1

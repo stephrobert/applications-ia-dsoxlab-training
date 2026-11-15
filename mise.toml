@@ -1,0 +1,8 @@
+# Les outils du catalogue, épinglés : `mise install` les pose à la version
+# mesurée ici. Versions relevées le 2026-11-15 (`mise ls-remote`), la dernière
+# publiée de chacun. scripts/valider-labs.py refuse de rendre un verdict si les
+# outils du PATH ne sont pas ceux-là.
+
+[tools]
+uv = "0.13.8"
+python = "3.14.10"
