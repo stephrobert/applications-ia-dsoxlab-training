@@ -29,4 +29,4 @@ select = ["E", "F", "I", "UP", "B", "S"]
 # S101 : `assert` est l'outil de travail d'un test, pas un défaut.
 # scripts/ est l'outillage du formateur, repris de python-dsoxlab-training : il
 # lance dsoxlab, pytest et ansible-vault, des outils de confiance (S603, S607).
-per-file-ignores = { "labs/**/tests/*.py" = ["S101"], "tests/*.py" = ["S101"], "scripts/*.py" = ["E501", "S603", "S607"] }
+per-file-ignores = { "labs/**/tests/*.py" = ["S101"], "tests/*.py" = ["S101"], "scripts/*.py" = ["E501", "S101", "S603", "S607"] }

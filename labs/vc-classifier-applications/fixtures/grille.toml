@@ -50,11 +50,12 @@ criticite_metier = "importante : l'arrêt gêne un service pendant plusieurs jou
 3 = "C4"
 
 [regle]
-texte = "Une classe contestée se relève d'un cran sans discussion ; elle ne se baisse qu'avec une décision humaine écrite."
-# Steps a class may go up above the computed one without a written decision.
-# Crans dont une classe peut monter au-dessus de la classe calculée sans
-# décision écrite.
-releve_max_sans_decision = 1
+texte = "En cas de doute sur un critère, on retient le score supérieur. Une classe peut toujours être relevée ; elle ne s'abaisse qu'avec une décision humaine écrite."
+# A class may always be raised above the computed one, with no ceiling; it is
+# only lowered by a written human decision, which this lab does not have.
+# Une classe peut toujours être relevée au-dessus de la classe calculée, sans
+# plafond ; elle ne s'abaisse qu'avec une décision humaine écrite, que ce lab
+# n'a pas.
 
 # What each class imposes. The [classes.Cn.texte] lines are the doctrine, word
 # for word; [classes.Cn.impose] says the same rules in a form a script can

@@ -2,7 +2,7 @@
 
 ## D'où viennent les valeurs
 
-La grille (critères, échelles, classe par score, cran de relèvement, politique
+La grille (critères, échelles, classe par score, règle de relèvement, politique
 de chaque classe) vit dans UN seul fichier, `fixtures/grille.toml`, tiré de
 `doctrine_labs.classification` du cadrage (seuils décidés le 2026-11-15).
 Ces tests la relisent depuis `fixtures/` (jamais depuis `challenge/work`,
@@ -191,19 +191,16 @@ def test_la_classe_sous_evaluee_est_rejetee(
 def test_la_politique_suit_la_classe(
     classification: dict[str, Any], verdicts: dict[str, dict[str, Any]]
 ) -> None:
-    releve_max = int(GRILLE["regle"]["releve_max_sans_decision"])
     politiques = set()
     for nom, attendue in ATTENDUES.items():
         app = _application(classification, nom)
         retenue = app.get("classe_retenue")
         ecart = _rang(retenue) - _rang(attendue)
-        assert 0 <= ecart <= releve_max and _rang(retenue), message(
-            en=f"{nom}: retained in `{retenue}`. The grid allows its class or at "
-            f"most {releve_max} step above it without a written decision. A policy "
-            "that does not follow the risk is the same policy for everyone.",
-            fr=f"{nom} : retenu en `{retenue}`. La grille admet sa classe, ou au "
-            f"plus {releve_max} cran au-dessus sans décision écrite. Une politique "
-            "qui ne suit pas le risque est la même politique pour tous.",
+        assert _rang(retenue) and ecart >= 0, message(
+            en=f"{nom}: retained in `{retenue}`. A class may be raised, never lowered "
+            "below the one the grid gives without a written human decision.",
+            fr=f"{nom} : retenu en `{retenue}`. Une classe peut être relevée, jamais "
+            "abaissée sous celle que donne la grille sans décision humaine écrite.",
         )
         verdict = verdicts.get(nom, {})
         assert verdict.get("policy_ok"), message(

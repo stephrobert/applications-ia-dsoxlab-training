@@ -95,7 +95,6 @@ def politique_ok(grille: dict[str, Any], classe: str, politique: dict[str, Any])
 
 
 def examiner(grille: dict[str, Any], nom: str, app: dict[str, Any]) -> dict[str, Any]:
-    releve_max = int(grille["regle"]["releve_max_sans_decision"])
     resultat: dict[str, Any] = {"application": nom, "problems": []}
     calculee, erreurs = classe_calculee(grille, app.get("criteres", {}))
     resultat["computed_class"] = calculee
@@ -126,11 +125,6 @@ def examiner(grille: dict[str, Any], nom: str, app: dict[str, Any]) -> dict[str,
         resultat["class_ok"] = False
         resultat["problems"].append(
             f"classe_retenue {retenue} is below the computed class {calculee}"
-        )
-    elif r - rang(calculee) > releve_max:
-        resultat["class_ok"] = False
-        resultat["problems"].append(
-            f"classe_retenue {retenue} is more than {releve_max} step(s) above {calculee}"
         )
     else:
         resultat["class_ok"] = True

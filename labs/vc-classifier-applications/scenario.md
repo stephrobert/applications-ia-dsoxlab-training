@@ -19,8 +19,9 @@ Everything is in `challenge/work`:
 The grid in one sentence: each criterion (data, flows to the information
 system, users, business criticality) gives a score from 0 to 3, and **the
 highest criterion wins**. Score 0 gives C1, 1 gives C2, 2 gives C3, 3 gives
-C4. A class may go up one step without discussion; it only goes down with a
-written human decision, which this lab does not have.
+C4. When in doubt about a criterion, keep the higher score. A class may
+always be raised; it is only lowered by a written human decision, which this
+lab does not have.
 
 ## Mission
 

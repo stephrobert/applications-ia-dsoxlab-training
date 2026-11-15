@@ -19,8 +19,9 @@ Tout est dans `challenge/work` :
 La grille en une phrase : chaque critère (données, flux vers le SI,
 utilisateurs, criticité métier) donne un score de 0 à 3, et **le critère le
 plus élevé l'emporte**. Le score 0 donne C1, 1 donne C2, 2 donne C3, 3
-donne C4. Une classe peut monter d'un cran sans discussion ; elle ne
-descend qu'avec une décision humaine écrite, que ce lab n'a pas.
+donne C4. En cas de doute sur un critère, on retient le score supérieur.
+Une classe peut toujours être relevée ; elle ne s'abaisse qu'avec une
+décision humaine écrite, que ce lab n'a pas.
 
 ## Mission
 
