@@ -1,0 +1,23 @@
+title: "Construire une skill de validation réutilisable qui lance ses propres scripts"
+description: |
+  Le dépôt portail-achats a une première version d'une skill /valider que
+  Claude Code n'a jamais chargée : mauvais nom de fichier, nom invalide,
+  étapes qui appellent des scripts hors de la skill, dont un mal orthographié,
+  et un allowed-tools qui n'en couvre aucun. Faites-en une skill autonome :
+  un SKILL.md valide, ses trois scripts dans son propre dossier scripts/,
+  exécutables et appelés directement, et un allowed-tools qui pré-approuve
+  exactement ces appels. Un banc hors ligne, qui n'est pas Claude Code,
+  contrôle la skill et exécute ses étapes, y compris sur des copies du projet
+  où un défaut a été injecté.
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/skills-claude-code/
+criteria:
+  - id: structure-valide
+    label: "SKILL.md se lit comme une skill et ne se lance qu'à la demande"
+  - id: scripts-executables
+    label: "Les trois scripts vivent dans la skill, inchangés et exécutables, et les étapes les appellent directement"
+  - id: validation-reelle
+    label: "La skill passe sur le projet sain et attrape chaque défaut injecté à la bonne étape"
+  - id: allowed-tools-exact
+    label: "allowed-tools pré-approuve les trois appels et rien d'autre"
+  - id: journal-a-jour
+    label: "Le journal du banc correspond à la skill actuelle et montre une exécution complète"

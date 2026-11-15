@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: cc-skill-de-validation
+title: "Build a reusable validation skill that runs its own scripts"
+level: l1
+description: |
+  The portail-achats repository has a first version of a /valider skill
+  that Claude Code never loaded: wrong file name, invalid name, steps that
+  call scripts outside the skill, one of them misspelled, and allowed-tools
+  that covers none of them. Turn it into a self-contained skill: a valid
+  SKILL.md, its three scripts in its own scripts/ folder, executable and
+  called directly, and allowed-tools that pre-approves exactly those calls.
+  An offline bench, not Claude Code, checks the skill and runs its steps,
+  including on copies of the project where a defect was injected.
+skills:
+  - claude-code
+  - skills
+  - validation
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/skills-claude-code/
+lab_type: lab
+estimated_time: 40m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - README.md
+    - .claude/skills/valider/skill.md
+    - docs/validation.md
+    - src/__init__.py
+    - src/orders.py
+    - src/config.py
+    - tests/__init__.py
+    - tests/test_orders.py
+    - tools/validation/check_style.py
+    - tools/validation/run_tests.py
+    - tools/validation/check_secrets.py
+    - bench/skill_bench.py
+criteria:
+  - id: structure-valide
+    label: "SKILL.md is readable as a skill and starts on demand only"
+    tests:
+      - test_la_structure_de_la_skill_est_valide
+  - id: scripts-executables
+    label: "The three scripts live in the skill, unchanged and executable, and the steps call them directly"
+    tests:
+      - test_les_scripts_sont_dans_la_skill_et_executables
+  - id: validation-reelle
+    label: "The skill passes on the sound project and catches each injected defect at the right step"
+    tests:
+      - test_la_skill_detecte_les_defauts_injectes
+  - id: allowed-tools-exact
+    label: "allowed-tools pre-approves the three calls and nothing else"
+    tests:
+      - test_allowed_tools_approuve_exactement_les_trois_appels
+  - id: journal-a-jour
+    label: "The bench journal matches the current skill and shows a full run"
+    tests:
+      - test_le_journal_correspond_a_la_skill_actuelle
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
