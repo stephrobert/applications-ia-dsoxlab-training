@@ -11,7 +11,7 @@ list pinned by hash that installs offline.
 |---|---|
 | Target | your machine: Python 3.11 or later with `venv` and pip. No network, no AI service, no API key |
 | Duration | about 30 minutes |
-| Paired lesson | [Vibe coding](https://www.stephane-robert.info/docs/developper/vibe-coding/) (in French) |
+| Paired lesson | [Check a dependency](https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/check-a-dependency/) |
 | Previous | `vc-boucle-methode` |
 
 ```bash

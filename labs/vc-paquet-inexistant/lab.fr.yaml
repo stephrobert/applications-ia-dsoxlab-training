@@ -4,7 +4,7 @@ description: |
   Vérifiez chacune dans le registre interne avant toute installation,
   refusez ce qui ne peut pas être accepté tel quel, et livrez une liste
   épinglée par empreinte qui s'installe hors ligne.
-doc_url: https://www.stephane-robert.info/docs/developper/vibe-coding/
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/verifier-une-dependance/
 criteria:
   - id: registre-seul
     label: "Seules restent les dépendances que sert le registre interne, et la revue consigne les autres avec une raison"

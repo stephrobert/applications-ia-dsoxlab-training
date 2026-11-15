@@ -13,7 +13,7 @@ auquel la session suivante peut se fier.
 |---|---|
 | Cible | votre poste : Python 3.11 ou plus, pytest, Git. Ni réseau, ni service d'IA, ni clé d'API |
 | Durée | environ 40 minutes |
-| Leçon associée | [Workflow agentique](https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/workflow-agentique/) |
+| Leçon associée | [Sécuriser et gouverner les applications générées par IA](https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/) |
 | Suivant | `vc-paquet-inexistant` |
 
 ```bash

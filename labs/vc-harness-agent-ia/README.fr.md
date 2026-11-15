@@ -17,7 +17,7 @@ ici ne prouve pas le comportement d'un vrai agent.
 |---|---|
 | Cible | votre poste : Python 3.11 ou plus. Ni réseau, ni service d'IA, ni clé d'API |
 | Durée | environ 60 minutes |
-| Leçon associée | [Poser un harness](https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/poser-un-harness/) |
+| Leçon associée | [Sécuriser et gouverner les applications générées par IA](https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/) |
 | Précédent | `vc-paquet-inexistant` |
 
 ```bash

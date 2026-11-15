@@ -12,7 +12,7 @@ the criteria already done, and leave a journal the next session can trust.
 |---|---|
 | Target | your machine: Python 3.11 or later, pytest, Git. No network, no AI service, no API key |
 | Duration | about 40 minutes |
-| Paired lesson | [Agentic workflow](https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/agentic-workflow/) |
+| Paired lesson | [Governing and Securing AI-Generated Applications](https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/) |
 | Next | `vc-paquet-inexistant` |
 
 ```bash

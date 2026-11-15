@@ -17,7 +17,7 @@ here is not a proof of how a real agent behaves.
 |---|---|
 | Target | your machine: Python 3.11 or later. No network, no AI service, no API key |
 | Duration | about 60 minutes |
-| Paired lesson | [Set up a harness](https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/set-up-a-harness/) |
+| Paired lesson | [Governing and Securing AI-Generated Applications](https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/) |
 | Previous | `vc-paquet-inexistant` |
 
 ```bash

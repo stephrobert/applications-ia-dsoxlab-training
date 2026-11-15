@@ -12,7 +12,7 @@ hors ligne.
 |---|---|
 | Cible | votre poste : Python 3.11 ou plus avec `venv` et pip. Ni réseau, ni service d'IA, ni clé d'API |
 | Durée | environ 30 minutes |
-| Leçon associée | [Vibe coding](https://www.stephane-robert.info/docs/developper/vibe-coding/) |
+| Leçon associée | [Vérifier une dépendance](https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/verifier-une-dependance/) |
 | Précédent | `vc-boucle-methode` |
 
 ```bash

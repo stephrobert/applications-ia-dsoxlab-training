@@ -7,7 +7,7 @@ description: |
   secret, directement ou par le shell, se voir refuser un serveur MCP inconnu
   et être bloqué quand il supprime un test, pendant que son travail ordinaire
   passe.
-doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/poser-un-harness/
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/
 criteria:
   - id: secret-illisible
     label: "La lecture du secret échoue, et le secret est toujours en place"

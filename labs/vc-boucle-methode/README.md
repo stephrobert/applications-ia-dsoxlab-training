@@ -11,7 +11,7 @@ tie the new requirement to a test that would catch its regression.
 |---|---|
 | Target | your machine: Python 3.11 or later, pytest, `patch` or git. No network, no AI service, no API key |
 | Duration | about 40 minutes |
-| Paired lesson | [Vibe coding](https://www.stephane-robert.info/docs/developper/vibe-coding/) (in French) |
+| Paired lesson | [The work loop](https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/work-loop/) |
 | Next | `vc-paquet-inexistant` |
 
 ```bash
