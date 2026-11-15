@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: vc-contrat-applicatif
+title: "Write the contract of an AI-built application and keep the candidate repository from authorising itself"
+level: l1
+description: |
+  The coding agent drafted the portail-achats contract so that it "can be
+  deployed". Rewrite application.yaml until it passes the schema of the
+  policy repository (owners, data with their retention, flows, dependencies,
+  class), then sign the decision as the approver in the policy repository,
+  and check that the same decision placed in the candidate repository
+  authorises nothing.
+skills:
+  - ai-governance
+  - application-inventory
+  - json-schema
+  - ssh-signature
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/application-contract/
+lab_type: lab
+estimated_time: 45m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - candidat/application.yaml
+    - candidat/README.md
+    - candidat/schema/application.schema.json
+    - politique/schemas/application.schema.json
+    - politique/classification.json
+    - politique/demandes.toml
+    - politique/allowed_signers
+    - politique/decisions/README.md
+    - demande/portail-achats.md
+    - demande/precisions.md
+    - cles/demandeur
+    - cles/demandeur.pub
+    - cles/approbateur
+    - cles/approbateur.pub
+    - plateforme/commun.py
+    - plateforme/valider_fiche.py
+    - plateforme/barriere.py
+criteria:
+  - id: schema-valide
+    label: "The contract passes the schema of the policy repository and describes the portail-achats as the request does"
+    tests:
+      - test_la_fiche_respecte_le_schema_de_la_politique
+  - id: proprietaires
+    label: "The contract names a business owner and a technical owner, and the business owner is not the requester"
+    tests:
+      - test_la_fiche_nomme_ses_proprietaires
+  - id: conservation
+    label: "Each data item of the contract carries the retention set by the data protection officer"
+    tests:
+      - test_chaque_donnee_a_sa_duree_de_conservation
+  - id: politique-fait-foi
+    label: "The portail-achats is authorised by a signed decision of the policy repository, and the same decision in the candidate repository authorises nothing"
+    tests:
+      - test_seul_le_depot_de_politique_autorise
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false

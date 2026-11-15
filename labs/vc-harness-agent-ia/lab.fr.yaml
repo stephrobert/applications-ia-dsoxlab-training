@@ -1,0 +1,18 @@
+title: "Poser un harness minimal pour un agent de code et l'éprouver sur un agent simulé"
+description: |
+  Un nouveau dépôt du portail-achats n'a aucun harness. Écrivez ses
+  instructions de projet (AGENTS.md), ses permissions et un hook PreToolUse
+  (.claude/settings.json) et sa liste de serveurs MCP approuvés (.mcp.json),
+  puis lancez un agent simulé et déterministe : il doit échouer à lire le
+  secret, se voir refuser un serveur MCP inconnu et être bloqué quand il
+  supprime un test, pendant que son travail ordinaire passe.
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/poser-un-harness/
+criteria:
+  - id: secret-illisible
+    label: "La lecture du secret échoue, et le secret est toujours en place"
+  - id: mcp-inconnu-refuse
+    label: "Un appel à un serveur MCP inconnu est refusé, et le serveur approuvé reste joignable"
+  - id: suppression-des-tests-bloquee
+    label: "La suppression d'un fichier de test est bloquée avant de s'exécuter, quelle que soit l'écriture de la commande"
+  - id: travail-legitime
+    label: "L'agent charge les instructions du projet, son travail ordinaire passe, et son journal correspond au harness actuel"

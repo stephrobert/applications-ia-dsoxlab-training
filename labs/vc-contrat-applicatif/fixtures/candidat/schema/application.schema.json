@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "application.yaml (written by the coding agent so that the contract validates)",
+  "type": "object",
+  "required": ["id", "nom", "classe_declaree"],
+  "properties": {
+    "id": {"type": "string"},
+    "nom": {"type": "string"},
+    "classe_declaree": {"enum": ["C1", "C2", "C3", "C4"]}
+  }
+}

@@ -1,0 +1,18 @@
+title: "Rédiger la fiche applicative d'une application créée avec l'IA sans laisser le dépôt candidat s'autoriser"
+description: |
+  L'agent de code a rédigé la fiche du portail-achats pour qu'il « puisse
+  être déployé ». Reprenez application.yaml jusqu'à ce qu'elle passe le
+  schéma du dépôt de politique (propriétaires, données et leur conservation,
+  flux, dépendances, classe), puis signez la décision en approbatrice dans
+  le dépôt de politique, et vérifiez que la même décision posée dans le
+  dépôt candidat n'autorise rien.
+doc_url: https://www.stephane-robert.info/docs/ia/applications-generees-par-ia/contrat-applicatif/
+criteria:
+  - id: schema-valide
+    label: "La fiche passe le schéma du dépôt de politique et décrit le portail-achats comme le fait la demande"
+  - id: proprietaires
+    label: "La fiche nomme un propriétaire métier et un propriétaire technique, et le propriétaire métier n'est pas la demandeuse"
+  - id: conservation
+    label: "Chaque donnée de la fiche porte la durée de conservation fixée par le délégué à la protection des données"
+  - id: politique-fait-foi
+    label: "Le portail-achats est autorisé par une décision signée du dépôt de politique, et la même décision dans le dépôt candidat n'autorise rien"

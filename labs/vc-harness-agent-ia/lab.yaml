@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: vc-harness-agent-ia
+title: "Set up a minimal harness for a coding agent and test it on a simulated agent"
+level: l1
+description: |
+  A new repository of the portail-achats has no harness. Write its project
+  instructions (AGENTS.md), its permissions and a PreToolUse hook
+  (.claude/settings.json) and its list of approved MCP servers (.mcp.json),
+  then run a simulated, deterministic agent: it must fail to read the secret,
+  be refused an unknown MCP server and be blocked when it deletes a test,
+  while its ordinary work goes through.
+skills:
+  - vibe-coding
+  - agent-harness
+  - permissions
+  - hooks
+  - mcp
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/set-up-a-harness/
+lab_type: lab
+estimated_time: 60m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - README.md
+    - orders.py
+    - tests/test_orders.py
+    - secrets/erp.ini
+    - tools/docs_server.py
+    - agent/agent.py
+    - agent/scenario.json
+criteria:
+  - id: secret-illisible
+    label: "Reading the secret fails, and the secret is still in place"
+    tests:
+      - test_la_lecture_du_secret_echoue
+  - id: mcp-inconnu-refuse
+    label: "A call to an unknown MCP server is refused, and the approved server stays reachable"
+    tests:
+      - test_un_serveur_mcp_inconnu_est_refuse
+  - id: suppression-des-tests-bloquee
+    label: "Deleting a test file is blocked before it runs, however the command is written"
+    tests:
+      - test_un_hook_bloque_la_suppression_des_tests
+  - id: travail-legitime
+    label: "The agent loads the project instructions, its ordinary work goes through, and its journal matches the current harness"
+    tests:
+      - test_le_travail_legitime_passe
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false

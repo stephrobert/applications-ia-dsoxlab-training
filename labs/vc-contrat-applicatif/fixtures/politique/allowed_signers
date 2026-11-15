@@ -1,0 +1,6 @@
+# Who may sign a decision of the policy repository, and for which use.
+# Qui peut signer une décision du dépôt de politique, et pour quel usage.
+# Format: principal namespaces="..." key (man ssh-keygen, ALLOWED SIGNERS).
+# m.leroy: head of the purchasing department (role responsable_service).
+# m.leroy : responsable du service achats (rôle responsable_service).
+m.leroy namespaces="decision-applicative" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILasvxpLIL204gC8/EJyQ6Gum/5m2Ys5IRWyuoJPsw59

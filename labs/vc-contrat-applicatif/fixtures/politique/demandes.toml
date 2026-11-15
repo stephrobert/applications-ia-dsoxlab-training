@@ -1,0 +1,8 @@
+# What the platform recorded when each request arrived: who asked.
+# Ce que la plateforme a enregistré à l'arrivée de chaque demande : qui l'a faite.
+#
+# The candidate repository cannot change this file.
+# Le dépôt candidat ne peut pas modifier ce fichier.
+
+[portail-achats]
+demandeur = "j.petit"
