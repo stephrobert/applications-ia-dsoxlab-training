@@ -132,7 +132,7 @@ controles = [
   "signature_artefact", "deploiement_par_digest", "flux_si_par_passerelle", "journaux",
   "dast", "requalification_mensuelle", "plan_de_retrait",
 ]
-approbation = "responsable_de_service_et_securite"
+approbation = "responsable_du_service_distinct_du_demandeur_et_securite"
 fiches_decision_signees = 2
 duree_autorisation_mois = 3
 
@@ -140,5 +140,5 @@ duree_autorisation_mois = 3
 controles = "Contrôles de C3 plus DAST, test de requalification mensuel, plan de retrait."
 proprietaire = "Propriétaire métier et propriétaire technique, tous deux habilités."
 revue = "Revue humaine du diff et du dossier, par une personne qui n'a pas écrit la demande."
-approbation_humaine = "Deux fiches de décision signées : responsable de service et sécurité (RSSI ou délégué). Les décisions réglementaires (par exemple une analyse d'impact sur la protection des données) restent hors des labs."
+approbation_humaine = "Deux fiches de décision signées : responsable du service demandeur, distinct du demandeur, et sécurité (RSSI ou délégué). Les décisions réglementaires (par exemple une analyse d'impact sur la protection des données) restent hors des labs."
 duree_autorisation = "3 mois au plus."
