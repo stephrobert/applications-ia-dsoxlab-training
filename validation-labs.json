@@ -103,6 +103,114 @@
   "uv": "0.13.8",
   "verdict": "VALIDE"
  },
+ "vc-contrat-applicatif": {
+  "apres": {
+   "echecs": [],
+   "passed": 4,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 4
+  },
+  "avant": {
+   "echecs": [
+    "test_chaque_donnee_a_sa_duree_de_conservation",
+    "test_la_fiche_nomme_ses_proprietaires",
+    "test_la_fiche_respecte_le_schema_de_la_politique",
+    "test_seul_le_depot_de_politique_autorise"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
+  },
+  "date": "2026-11-15",
+  "duree_s": 4,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/4",
+   "après la solution : 4/4",
+   "après clean et run : 0/4",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-contrat-applicatif.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_chaque_donnee_a_sa_duree_de_conservation",
+    "test_la_fiche_nomme_ses_proprietaires",
+    "test_la_fiche_respecte_le_schema_de_la_politique",
+    "test_seul_le_depot_de_politique_autorise"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
+ "vc-harness-agent-ia": {
+  "apres": {
+   "echecs": [],
+   "passed": 4,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 4
+  },
+  "avant": {
+   "echecs": [
+    "test_la_lecture_du_secret_echoue",
+    "test_le_travail_legitime_passe",
+    "test_un_hook_bloque_la_suppression_des_tests",
+    "test_un_serveur_mcp_inconnu_est_refuse"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
+  },
+  "date": "2026-11-15",
+  "duree_s": 5,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/4",
+   "après la solution : 4/4",
+   "après clean et run : 0/4",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-harness-agent-ia.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_la_lecture_du_secret_echoue",
+    "test_le_travail_legitime_passe",
+    "test_un_hook_bloque_la_suppression_des_tests",
+    "test_un_serveur_mcp_inconnu_est_refuse"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
  "vc-paquet-inexistant": {
   "apres": {
    "echecs": [],
