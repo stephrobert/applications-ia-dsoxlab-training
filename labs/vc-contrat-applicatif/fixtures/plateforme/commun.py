@@ -295,7 +295,10 @@ def valider(valeur: Any, schema: dict[str, Any], chemin: str = "") -> list[str]:
     if isinstance(valeur, dict):
         for cle in schema.get("required", []):
             if cle not in valeur:
-                erreurs.append(f"{chemin}.{cle}".lstrip(".") + ": required field is missing")
+                # Same wording as the jsonschema library: `$.path: 'field' is a
+                # required property`.
+                ou = "$" + (f".{chemin}" if chemin else "")
+                erreurs.append(f"{ou}: '{cle}' is a required property")
         proprietes = schema.get("properties", {})
         for cle, sous in valeur.items():
             if cle in proprietes:

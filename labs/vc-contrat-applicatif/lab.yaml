@@ -5,7 +5,7 @@ level: l1
 description: |
   The coding agent drafted the portail-achats contract so that it "can be
   deployed". Rewrite application.yaml until it passes the schema of the
-  policy repository (owners, data with their retention, flows, dependencies,
+  policy repository (owners, data with their purpose and retention, flows, dependencies,
   class), then sign the decision as the approver in the policy repository,
   and check that the same decision placed in the candidate repository
   authorises nothing.
@@ -51,9 +51,9 @@ criteria:
     tests:
       - test_la_fiche_nomme_ses_proprietaires
   - id: conservation
-    label: "Each data item of the contract carries the retention set by the data protection officer"
+    label: "Each data item of the contract carries its purpose and the retention set by the data protection officer"
     tests:
-      - test_chaque_donnee_a_sa_duree_de_conservation
+      - test_chaque_donnee_a_sa_conservation_et_sa_finalite
   - id: politique-fait-foi
     label: "The portail-achats is authorised by a signed decision of the policy repository, and the same decision in the candidate repository authorises nothing"
     tests:

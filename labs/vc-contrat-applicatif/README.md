@@ -28,7 +28,7 @@ the checks read it from there: a rule that changes touches that file only.
 ## What you will be able to do
 
 - Write an application contract that names its owners, its data with their
-  retention, its flows and its critical dependencies.
+  purpose and retention, its flows and its critical dependencies.
 - Validate it with the schema of the policy repository, never with a schema
   the candidate repository brings.
 - Explain why a decision in the candidate repository authorises nothing.

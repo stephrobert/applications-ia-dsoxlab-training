@@ -1,0 +1,4 @@
+# La solution pose des règles dans .claude/rules/, que le .gitignore global du
+# poste du formateur ignore (.claude/). Sans cette exception, la solution
+# commitée perdrait ses règles, et le lab ne passerait plus à 100 en CI.
+!solution/.claude/

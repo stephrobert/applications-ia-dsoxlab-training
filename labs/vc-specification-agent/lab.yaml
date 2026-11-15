@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: vc-specification-agent
+title: "Turn a business request into verifiable criteria and have an agent implement them"
+level: l1
+description: |
+  The head of purchasing asks, in prose, for an approval rule in the
+  portail-achats. Write the requirements and acceptance criteria in
+  SPEC.md, the tests that prove them, and a plan of slices that says which
+  files the agent may change. Then run a simulated agent: it must implement
+  the change without rewriting the specification, weakening the tests or
+  touching another module.
+skills:
+  - vibe-coding
+  - specification
+  - acceptance-criteria
+  - pytest
+  - agent-harness
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/
+lab_type: lab
+estimated_time: 50m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - REQUEST.md
+    - REQUEST.fr.md
+    - SPEC.md
+    - plan.json
+    - approvals.py
+    - orders.py
+    - pytest.ini
+    - tests/test_approvals.py
+    - agent/agent.py
+    - agent/proposal.json
+    - agent/proposal/approvals.py.b64
+criteria:
+  - id: criteres-verifiables
+    label: "Every acceptance criterion is tied to a test that fails before the implementation and passes with the agent's"
+    tests:
+      - test_chaque_critere_est_relie_a_un_test_rouge_puis_vert
+  - id: exigences-couvertes
+    label: "Every rule of the request, including the one it only implies, has a test that fails when the rule is broken"
+    tests:
+      - test_chaque_exigence_de_la_demande_fait_echouer_un_test
+  - id: exigences-intactes
+    label: "The specification and the tests are identical before and after the agent's run"
+    tests:
+      - test_la_specification_et_les_tests_sont_inchanges_par_l_agent
+  - id: perimetre-du-plan
+    label: "The agent changes only the files the plan allows, and its other attempts are refused and recorded"
+    tests:
+      - test_l_agent_ne_touche_que_les_fichiers_du_plan
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false

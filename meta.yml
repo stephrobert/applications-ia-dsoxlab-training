@@ -46,5 +46,7 @@ sections:
       - vc-classifier-applications
       - vc-contrat-applicatif
       - vc-boucle-methode
+      - vc-specification-agent
       - vc-paquet-inexistant
+      - vc-contexte-agent
       - vc-harness-agent-ia

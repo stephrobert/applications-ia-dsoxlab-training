@@ -27,3 +27,9 @@ labs/**/challenge/hints.source.yaml
 # Mot de passe des solutions chiffrées (ansible-vault). Il reste sur le poste
 # du formateur et dans le secret de la CI, jamais dans le dépôt.
 .vault-pass
+
+# ~/.gitignore_global du poste du formateur ignore `.claude/` : les labs qui
+# livrent des fichiers au format Claude Code (réglages, hooks, règles) les
+# perdraient au commit sans ces deux lignes (constaté le 2026-11-15).
+!labs/**/solution/.claude/
+!labs/**/fixtures/.claude/

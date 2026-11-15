@@ -58,11 +58,12 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["categorie", "description", "conservation_jours"],
+        "required": ["categorie", "description", "conservation_jours", "finalite"],
         "properties": {
           "categorie": {"enum": ["internes", "personnelles", "sensibles"]},
           "description": {"type": "string", "minLength": 1},
-          "conservation_jours": {"type": "integer", "exclusiveMinimum": 0}
+          "conservation_jours": {"type": "integer", "exclusiveMinimum": 0},
+          "finalite": {"type": "string", "minLength": 10}
         }
       }
     },

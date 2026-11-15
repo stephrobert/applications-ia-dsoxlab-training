@@ -7,9 +7,13 @@
 - **Technical owner:** Samir Moreau (`s.moreau`), applications team of the IT
   department. He accepts to maintain it if the buyer leaves.
 - **Retention**, set by the data protection officer:
-  - supplier contacts (name, email, phone): **1095 days**;
+  - supplier contacts (name, email, phone): **1095 days**, for the
+    purpose "contact the supplier about a purchase order";
   - the local copy of purchase orders (amounts and items, no contact):
-    **30 days**.
+    **30 days**, for the purpose "show the orders quickly to the purchasing
+    team".
+- **Why a purpose:** the GDPR ties a retention period to a purpose. Each
+  data item of the contract states its own.
 - **Critical dependencies:** the ERP API, `erp-achats`. When it stops, the
   portal shows nothing. The portal depends on no other service.
 - **Who decides:** for this request, the signed decision belongs to Martine
@@ -23,9 +27,13 @@
 - **Propriétaire technique :** Samir Moreau (`s.moreau`), équipe applications
   de la DSI. Il accepte de le maintenir si l'acheteuse s'en va.
 - **Conservation**, fixée par le délégué à la protection des données :
-  - contacts fournisseurs (nom, courriel, téléphone) : **1095 jours** ;
+  - contacts fournisseurs (nom, courriel, téléphone) : **1095 jours**, pour
+    la finalité « contacter le fournisseur au sujet d'une commande » ;
   - copie locale des commandes d'achat (montants et articles, sans contact) :
-    **30 jours**.
+    **30 jours**, pour la finalité « afficher rapidement les commandes à
+    l'équipe achats ».
+- **Pourquoi une finalité :** le RGPD lie une durée de conservation à une
+  finalité. Chaque donnée de la fiche donne la sienne.
 - **Dépendances critiques :** l'API de l'ERP, `erp-achats`. Quand elle
   s'arrête, le portail n'affiche plus rien. Le portail ne dépend d'aucun autre
   service.
