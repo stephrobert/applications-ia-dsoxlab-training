@@ -1,0 +1,158 @@
+{
+ "vc-boucle-methode": {
+  "apres": {
+   "echecs": [],
+   "passed": 3,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 3
+  },
+  "avant": {
+   "echecs": [
+    "test_la_proposition_qui_neutralise_un_test_est_refusee",
+    "test_la_proposition_saine_est_appliquee_et_la_suite_passe",
+    "test_la_specification_porte_un_critere_verifiable"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 3
+  },
+  "date": "2026-11-15",
+  "duree_s": 5,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/3",
+   "après la solution : 3/3",
+   "après clean et run : 0/3",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-boucle-methode.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_la_proposition_qui_neutralise_un_test_est_refusee",
+    "test_la_proposition_saine_est_appliquee_et_la_suite_passe",
+    "test_la_specification_porte_un_critere_verifiable"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 3
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
+ "vc-classifier-applications": {
+  "apres": {
+   "echecs": [],
+   "passed": 3,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 3
+  },
+  "avant": {
+   "echecs": [
+    "test_la_classe_sous_evaluee_est_rejetee",
+    "test_la_politique_suit_la_classe",
+    "test_le_critere_le_plus_eleve_l_emporte"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 3
+  },
+  "date": "2026-11-15",
+  "duree_s": 3,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/3",
+   "après la solution : 3/3",
+   "après clean et run : 0/3",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-classifier-applications.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_la_classe_sous_evaluee_est_rejetee",
+    "test_la_politique_suit_la_classe",
+    "test_le_critere_le_plus_eleve_l_emporte"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 3
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
+ "vc-paquet-inexistant": {
+  "apres": {
+   "echecs": [],
+   "passed": 3,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 3
+  },
+  "avant": {
+   "echecs": [
+    "test_le_paquet_inexistant_est_detecte_avant_installation",
+    "test_une_dependance_legitime_et_epinglee_passe",
+    "test_une_dependance_non_epinglee_est_refusee"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 3
+  },
+  "date": "2026-11-15",
+  "duree_s": 9,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/3",
+   "après la solution : 3/3",
+   "après clean et run : 0/3",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-paquet-inexistant.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_le_paquet_inexistant_est_detecte_avant_installation",
+    "test_une_dependance_legitime_et_epinglee_passe",
+    "test_une_dependance_non_epinglee_est_refusee"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 3
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ }
+}
