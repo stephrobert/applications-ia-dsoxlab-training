@@ -1,0 +1,26 @@
+# Surcharge française du catalogue. Elle ne porte QUE `repo.title`,
+# `repo.description`, et les `title` / `description` des sections, appariés
+# par `id` et non par position.
+#
+# La langue par défaut de l'outil est l'anglais : `meta.yml` porte donc
+# l'anglais, et ce fichier le français. Sans lui, une session anglaise lit les
+# titres de sections tels qu'ils sont écrits dans `meta.yml`.
+
+repo:
+  title: "Sécuriser et gouverner les applications générées par IA : les labs vérifiables"
+  description: >-
+    Labs vérifiables de la formation qui apprend à sécuriser et gouverner les
+    applications créées avec l'aide de l'IA : classer une application,
+    l'encadrer par un contrat, vibe coder avec une méthode et un harness, puis
+    fermer la chaîne de livraison. Aucun lab n'appelle un vrai service d'IA ni
+    n'exige de clé d'API : l'agent et ses réponses sont simulés et
+    déterministes.
+
+sections:
+  - id: niveau-1
+    title: "Niveau 1 : classer, cadrer et vibe coder avec méthode"
+    description: >-
+      Des exercices sur fichiers fournis, dans un shell local : classer une
+      application, écrire son contrat, relire un diff contre une
+      spécification, vérifier les dépendances qu'un agent propose, et poser un
+      harness.
