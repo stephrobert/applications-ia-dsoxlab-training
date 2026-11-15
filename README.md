@@ -2,6 +2,12 @@
 
 **Language:** [English](./README.md) · [Français](./README.fr.md)
 
+[![CI](https://github.com/stephrobert/applications-ia-dsoxlab-training/actions/workflows/ci.yml/badge.svg)](https://github.com/stephrobert/applications-ia-dsoxlab-training/actions/workflows/ci.yml)
+[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/stephrobert/applications-ia-dsoxlab-training?label=OpenSSF%20Scorecard)](https://securityscorecards.dev/viewer/?uri=github.com/stephrobert/applications-ia-dsoxlab-training)
+[![Plumber compliance](https://score.getplumber.io/github.com/stephrobert/applications-ia-dsoxlab-training.svg)](https://score.getplumber.io/github.com/stephrobert/applications-ia-dsoxlab-training)
+[![SLSA 3](https://slsa.dev/images/gh-badge-level3.svg)](https://slsa.dev)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](./LICENSE)
+
 A catalog of **verifiable labs** for the course « Governing and Securing
 AI-Generated Applications » on Stéphane Robert's blog, played by the
 [dsoxlab](https://github.com/stephrobert/dsoxlab) CLI. It is for the CISOs, IT

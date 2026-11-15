@@ -2,6 +2,12 @@
 
 **Langue :** [English](./README.md) · [Français](./README.fr.md)
 
+[![CI](https://github.com/stephrobert/applications-ia-dsoxlab-training/actions/workflows/ci.yml/badge.svg)](https://github.com/stephrobert/applications-ia-dsoxlab-training/actions/workflows/ci.yml)
+[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/stephrobert/applications-ia-dsoxlab-training?label=OpenSSF%20Scorecard)](https://securityscorecards.dev/viewer/?uri=github.com/stephrobert/applications-ia-dsoxlab-training)
+[![Conformité Plumber](https://score.getplumber.io/github.com/stephrobert/applications-ia-dsoxlab-training.svg)](https://score.getplumber.io/github.com/stephrobert/applications-ia-dsoxlab-training)
+[![SLSA 3](https://slsa.dev/images/gh-badge-level3.svg)](https://slsa.dev)
+[![Licence : CC BY 4.0](https://img.shields.io/badge/Licence-CC%20BY%204.0-lightgrey.svg)](./LICENSE)
+
 Catalogue de **labs vérifiables** de la formation « Sécuriser et gouverner les
 applications générées par IA » du blog de Stéphane Robert, joué par la CLI
 [dsoxlab](https://github.com/stephrobert/dsoxlab). Il s'adresse aux RSSI, DSI et
