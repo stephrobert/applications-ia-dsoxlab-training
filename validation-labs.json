@@ -107,6 +107,60 @@
   "uv": "0.13.8",
   "verdict": "VALIDE"
  },
+ "cc-subagent-relecteur-borne": {
+  "apres": {
+   "echecs": [],
+   "passed": 4,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 4
+  },
+  "avant": {
+   "echecs": [
+    "test_le_journal_correspond_au_relecteur_actuel",
+    "test_le_relecteur_n_a_aucun_outil_d_ecriture",
+    "test_le_relecteur_peut_encore_faire_une_revue",
+    "test_les_outils_du_relecteur_sont_explicites"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
+  },
+  "date": "2026-11-15",
+  "duree_s": 3,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/4",
+   "après la solution : 4/4",
+   "après clean et run : 0/4",
+   "poste rendu intact"
+  ],
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-cc-subagent-relecteur-borne.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_le_journal_correspond_au_relecteur_actuel",
+    "test_le_relecteur_n_a_aucun_outil_d_ecriture",
+    "test_le_relecteur_peut_encore_faire_une_revue",
+    "test_les_outils_du_relecteur_sont_explicites"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
  "vc-boucle-methode": {
   "apres": {
    "echecs": [],
@@ -496,7 +550,7 @@
    "total": 4
   },
   "date": "2026-11-15",
-  "duree_s": 12,
+  "duree_s": 13,
   "ecarts": [],
   "etapes": [
    "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
