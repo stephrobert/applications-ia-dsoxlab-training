@@ -1,0 +1,19 @@
+title: "Limiter un subagent relecteur aux outils qui lisent"
+description: |
+  Pendant une revue, le subagent relecteur du dépôt portail-achats a lancé
+  le linter avec --fix, modifié le code, commité, poussé et fermé le ticket
+  du tracker. Son fichier n'a pas de champ tools : il hérite de tous les
+  outils de la session. Donnez-lui une liste tools explicite dans son
+  frontmatter : ce qu'une revue doit lire, et rien qui écrive. Un banc hors
+  ligne, qui n'est pas Claude Code, rejoue les appels qu'il a tentés et dit
+  lesquels atteindraient un outil.
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/subagents-claude-code/
+criteria:
+  - id: outils-explicites
+    label: "Le relecteur a une liste tools explicite, et rien d'autre n'a changé"
+  - id: aucune-ecriture
+    label: "Aucun appel qui écrit n'atteint un outil, y compris des appels absents de l'incident"
+  - id: revue-possible
+    label: "Les lectures dont une revue a besoin atteignent encore leur outil"
+  - id: journal-a-jour
+    label: "Le journal du banc correspond aux fichiers actuels et montre les écritures refusées"

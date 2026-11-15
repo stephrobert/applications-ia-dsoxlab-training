@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: cc-subagent-relecteur-borne
+title: "Limit a reviewer subagent to the tools that read"
+level: l1
+description: |
+  During a review, the relecteur subagent of the portail-achats repository
+  ran the linter with --fix, edited the code, committed, pushed and closed
+  the tracker issue. Its file has no tools field, so it inherits every tool
+  of the session. Give it an explicit tools list in its frontmatter: what a
+  review needs to read, and nothing that writes. An offline bench, not
+  Claude Code, replays the calls it attempted and says which would reach a
+  tool.
+skills:
+  - claude-code
+  - subagents
+  - permissions
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/subagents-claude-code/
+lab_type: lab
+estimated_time: 30m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - README.md
+    - .claude/agents/relecteur.md
+    - .claude/agents/correcteur.md
+    - docs/review-incident.md
+    - src/orders.py
+    - bench/agent_bench.py
+    - bench/session.json
+    - bench/review.json
+criteria:
+  - id: outils-explicites
+    label: "The reviewer has an explicit tools list, and nothing else changed"
+    tests:
+      - test_les_outils_du_relecteur_sont_explicites
+  - id: aucune-ecriture
+    label: "No call that writes reaches a tool, including calls not in the incident"
+    tests:
+      - test_le_relecteur_n_a_aucun_outil_d_ecriture
+  - id: revue-possible
+    label: "The reads a review needs still reach their tool"
+    tests:
+      - test_le_relecteur_peut_encore_faire_une_revue
+  - id: journal-a-jour
+    label: "The bench journal matches the current files and shows the writes refused"
+    tests:
+      - test_le_journal_correspond_au_relecteur_actuel
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false

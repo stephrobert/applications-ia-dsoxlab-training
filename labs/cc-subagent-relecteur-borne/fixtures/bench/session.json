@@ -1,0 +1,16 @@
+{
+  "comment": "The tools of the main session of the portail-achats project, as the bench sees them. A subagent without a `tools` field inherits all of them.",
+  "tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "Edit",
+    "Write",
+    "NotebookEdit",
+    "Bash",
+    "WebFetch",
+    "WebSearch",
+    "mcp__tracker__get_issue",
+    "mcp__tracker__update_issue"
+  ]
+}

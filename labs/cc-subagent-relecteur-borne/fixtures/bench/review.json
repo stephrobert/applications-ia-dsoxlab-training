@@ -1,0 +1,17 @@
+{
+  "comment": "The tool calls the relecteur subagent attempted during the last review (see docs/review-incident.md). The bench replays them, in this order.",
+  "calls": [
+    {"id": "r1", "tool": "Read", "input": "src/orders.py"},
+    {"id": "r2", "tool": "Grep", "input": "TODO"},
+    {"id": "r3", "tool": "Bash", "input": "git status"},
+    {"id": "r4", "tool": "Bash", "input": "git log --oneline -5"},
+    {"id": "r5", "tool": "Bash", "input": "git diff main...HEAD"},
+    {"id": "r6", "tool": "mcp__tracker__get_issue", "input": "PA-112"},
+    {"id": "w1", "tool": "Bash", "input": "ruff check --fix src"},
+    {"id": "w2", "tool": "Edit", "input": "src/orders.py"},
+    {"id": "w3", "tool": "Write", "input": "docs/review.md"},
+    {"id": "w4", "tool": "Bash", "input": "git commit -am 'review fixes'"},
+    {"id": "w5", "tool": "Bash", "input": "git push"},
+    {"id": "w6", "tool": "mcp__tracker__update_issue", "input": "PA-112 status=done"}
+  ]
+}
