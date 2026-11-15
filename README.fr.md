@@ -156,6 +156,7 @@ Un 0 accuserait le lab de ce qui manque au poste.
 |---|---|---|
 | [`cc-hook-qui-echoue`](labs/cc-hook-qui-echoue/) | Éprouver un hook qui réussit, bloque et plante | 45 min |
 | [`cc-serveur-mcp-non-approuve`](labs/cc-serveur-mcp-non-approuve/) | Refuser un serveur MCP qu'un dépôt déclare sans approbation | 30 min |
+| [`cc-regles-allow-ask-deny`](labs/cc-regles-allow-ask-deny/) | Faire appliquer des règles allow, ask et deny, au niveau projet et administré | 40 min |
 | [`cc-subagent-relecteur-borne`](labs/cc-subagent-relecteur-borne/) | Limiter un subagent relecteur aux outils qui lisent | 30 min |
 | [`cc-skill-de-validation`](labs/cc-skill-de-validation/) | Construire une skill de validation réutilisable qui lance ses propres scripts | 40 min |
 

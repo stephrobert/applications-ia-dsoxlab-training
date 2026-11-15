@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stephrobert/dsoxlab/main/schemas/lab.schema.json
+id: cc-regles-allow-ask-deny
+title: "Make allow, ask and deny rules apply, at project and managed level"
+level: l1
+description: |
+  The coding agent of the portail-achats repository force-pushed to main:
+  the project allows Bash(git *), and its one deny rule only matches one
+  exact text. Write the policy of the team and of the security team: deny
+  every form of forced push in the project without removing the team's
+  allow rules, make every other push ask first even where a more precise
+  allow matches, and refuse curl, wget and the secrets/ folder at the
+  managed level, which the project cannot override. An offline simulated
+  agent, not Claude Code, says what the merged rules decide for each
+  action. This lab proves how the rules are read, not their effect in a
+  real session.
+skills:
+  - claude-code
+  - permissions
+  - managed-settings
+distros:
+  - any
+doc_url: https://www.stephane-robert.info/docs/developper/autres-outils/claude-code/settings-json-avance/
+lab_type: lab
+estimated_time: 40m
+runtime:
+  type: shell
+  workdir: challenge/work
+  # Une fixture NON déclarée ici n'est PAS copiée.
+  fixtures:
+    - README.md
+    - .claude/settings.json
+    - managed/README.md
+    - docs/policy.md
+    - src/orders.py
+    - secrets/payment.ini
+    - agent/agent.py
+    - agent/scenario.json
+criteria:
+  - id: deny-l-emporte
+    label: "Every form of forced push is refused by a deny rule, while the team keeps its allow rules"
+    tests:
+      - test_deny_l_emporte_sur_allow
+  - id: ask-avant-allow
+    label: "Every other push asks first, even where a more precise allow rule matches"
+    tests:
+      - test_ask_l_emporte_sur_un_allow_plus_precis
+  - id: administre-prioritaire
+    label: "The managed level refuses curl, wget and secrets/ even when the project allows them"
+    tests:
+      - test_le_niveau_administre_l_emporte_sur_le_projet
+  - id: journal-a-jour
+    label: "The agent journal matches the current rules and shows the policy applied"
+    tests:
+      - test_le_journal_correspond_aux_regles_actuelles
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false

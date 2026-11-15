@@ -154,6 +154,7 @@ lab of what is missing from the machine.
 |---|---|---|
 | [`cc-hook-qui-echoue`](labs/cc-hook-qui-echoue/) | Test a hook that succeeds, blocks and crashes | 45 min |
 | [`cc-serveur-mcp-non-approuve`](labs/cc-serveur-mcp-non-approuve/) | Refuse an MCP server that a repository declares without approval | 30 min |
+| [`cc-regles-allow-ask-deny`](labs/cc-regles-allow-ask-deny/) | Make allow, ask and deny rules apply, at project and managed level | 40 min |
 | [`cc-subagent-relecteur-borne`](labs/cc-subagent-relecteur-borne/) | Limit a reviewer subagent to the tools that read | 30 min |
 | [`cc-skill-de-validation`](labs/cc-skill-de-validation/) | Build a reusable validation skill that runs its own scripts | 40 min |
 
