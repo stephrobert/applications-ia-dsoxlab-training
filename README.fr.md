@@ -141,8 +141,22 @@ Un 0 accuserait le lab de ce qui manque au poste.
 | Lab | Ce qu'il fait faire | Durée |
 |---|---|---|
 | [`vc-classifier-applications`](labs/vc-classifier-applications/) | Classer quatre applications créées avec l'IA et appliquer la politique de leur classe | 45 min |
+| [`vc-contrat-applicatif`](labs/vc-contrat-applicatif/) | Rédiger la fiche applicative d'une application créée avec l'IA sans laisser le dépôt candidat s'autoriser | 45 min |
 | [`vc-boucle-methode`](labs/vc-boucle-methode/) | Relire les changements d'un agent face à une spécification et à ses tests | 40 min |
+| [`vc-specification-agent`](labs/vc-specification-agent/) | Transformer une demande métier en critères vérifiables et la faire implémenter par un agent | 50 min |
+| [`vc-reprise-session`](labs/vc-reprise-session/) | Reprendre une session de code interrompue à partir de Git, pas de la mémoire | 40 min |
 | [`vc-paquet-inexistant`](labs/vc-paquet-inexistant/) | Vérifier les dépendances qu'un agent propose avant de les installer | 30 min |
+| [`vc-contexte-agent`](labs/vc-contexte-agent/) | Concevoir le contexte d'un agent de code et vérifier ce qu'il a vraiment chargé | 45 min |
+| [`vc-harness-agent-ia`](labs/vc-harness-agent-ia/) | Poser un harness minimal pour un agent de code et l'éprouver sur un agent simulé | 60 min |
+| [`vc-epreuve-classification`](labs/vc-epreuve-classification/) | Épreuve du niveau 1 : qualifier une application non documentée | 90 min |
+
+### Claude Code : un mécanisme par lab
+
+| Lab | Ce qu'il fait faire | Durée |
+|---|---|---|
+| [`cc-hook-qui-echoue`](labs/cc-hook-qui-echoue/) | Éprouver un hook qui réussit, bloque et plante | 45 min |
+| [`cc-serveur-mcp-non-approuve`](labs/cc-serveur-mcp-non-approuve/) | Refuser un serveur MCP qu'un dépôt déclare sans approbation | 30 min |
+| [`cc-subagent-relecteur-borne`](labs/cc-subagent-relecteur-borne/) | Limiter un subagent relecteur aux outils qui lisent | 30 min |
 
 ## Contribuer
 

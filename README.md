@@ -139,8 +139,22 @@ lab of what is missing from the machine.
 | Lab | What it has you do | Time |
 |---|---|---|
 | [`vc-classifier-applications`](labs/vc-classifier-applications/) | Classify four AI-built applications and apply the policy of their class | 45 min |
+| [`vc-contrat-applicatif`](labs/vc-contrat-applicatif/) | Write the contract of an AI-built application and keep the candidate repository from authorising itself | 45 min |
 | [`vc-boucle-methode`](labs/vc-boucle-methode/) | Review an agent's changes against a specification and its tests | 40 min |
+| [`vc-specification-agent`](labs/vc-specification-agent/) | Turn a business request into verifiable criteria and have an agent implement them | 50 min |
+| [`vc-reprise-session`](labs/vc-reprise-session/) | Resume an interrupted coding session from Git, not from memory | 40 min |
 | [`vc-paquet-inexistant`](labs/vc-paquet-inexistant/) | Check the dependencies an agent proposes before installing them | 30 min |
+| [`vc-contexte-agent`](labs/vc-contexte-agent/) | Design the context of a coding agent and check what it really loaded | 45 min |
+| [`vc-harness-agent-ia`](labs/vc-harness-agent-ia/) | Set up a minimal harness for a coding agent and test it on a simulated agent | 60 min |
+| [`vc-epreuve-classification`](labs/vc-epreuve-classification/) | Level 1 test: qualify an undocumented application | 90 min |
+
+### Claude Code: one mechanism per lab
+
+| Lab | What it has you do | Time |
+|---|---|---|
+| [`cc-hook-qui-echoue`](labs/cc-hook-qui-echoue/) | Test a hook that succeeds, blocks and crashes | 45 min |
+| [`cc-serveur-mcp-non-approuve`](labs/cc-serveur-mcp-non-approuve/) | Refuse an MCP server that a repository declares without approval | 30 min |
+| [`cc-subagent-relecteur-borne`](labs/cc-subagent-relecteur-borne/) | Limit a reviewer subagent to the tools that read | 30 min |
 
 ## Contributing
 
