@@ -10,7 +10,7 @@ one task with what it loaded:
 | What | What the simulated agent does | What it does not do |
 |---|---|---|
 | `CLAUDE.md` at the root | loads it at startup | user, managed and parent-directory files, `CLAUDE.local.md` |
-| `@path` imports | loads the imported file at startup, up to 5 levels; its lines count in the startup context | `@~/...`, paths outside the project |
+| `@path` imports | loads the imported file at startup, up to four hops; its lines count in the startup context | `@~/...`, paths outside the project |
 | `AGENTS.md` | loads it only if `CLAUDE.md` imports it, or if there is no `CLAUDE.md` at all | |
 | `.claude/rules/*.md` without `paths` | loads it at startup | imports inside a rule |
 | `.claude/rules/*.md` with `paths` | loads it when the task touches a matching file | |
@@ -22,8 +22,8 @@ So a full score proves that your files say the right thing **to this
 simulator**. It does not prove how a real Claude Code loads them. The
 header of `agent/agent.py` lists every rule it applies. Two points of format
 are taken from the documentation of Claude Code and were not checked against
-every version: the `paths` frontmatter of a rule, and the 5 levels of
-imports. Check them in the documentation of the version you use.
+every version: the `paths` frontmatter of a rule, and the maximum of four
+hops for imports. Check them in the documentation of the version you use.
 
 ## Situation
 
@@ -43,9 +43,12 @@ more than 3,000 lines. Everything is in `challenge/work`:
 | `agent/task.json` | its task: a loyalty discount in `src/commandes/discount.py` |
 | `agent/budget.json` | the budget of the startup context: 200 lines |
 
-The 200 lines come from the advice of the Claude Code documentation: keep a
-`CLAUDE.md` under 200 lines. An import does not make the context smaller:
-the imported lines are loaded at startup too, so they count.
+The Claude Code documentation targets under 200 lines **per CLAUDE.md
+file**, and adds that imported files load together with the CLAUDE.md that
+imports them. This lab applies the 200 lines to the **whole startup
+context**, imports and rules without `paths` included: a choice of the lab,
+stricter than the documentation. An import does not make the context
+smaller: the imported lines are loaded at startup too, so they count.
 
 ## Mission
 
