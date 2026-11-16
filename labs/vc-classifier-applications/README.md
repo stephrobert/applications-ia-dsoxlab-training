@@ -10,7 +10,7 @@ apply to each application the policy its class imposes.
 |---|---|
 | Target | your machine: Python 3.11 or later, no dependency, no network, no AI service |
 | Duration | about 45 minutes |
-| Paired lesson | [Classify an application](https://www.stephane-robert.info/en/docs/ia/applications-generees-par-ia/classer-une-application/) |
+| Paired lesson | [Classify an application](https://www.stephane-robert.info/en/docs/ai/ai-generated-applications/classify-an-application/) |
 | Next | `vc-boucle-methode` |
 
 ```bash
