@@ -10,7 +10,7 @@ puis fait une tâche avec ce qu'il a chargé :
 | Quoi | Ce que fait l'agent simulé | Ce qu'il ne fait pas |
 |---|---|---|
 | `CLAUDE.md` à la racine | le charge au démarrage | fichiers utilisateur, administrés et des répertoires parents, `CLAUDE.local.md` |
-| imports `@chemin` | charge le fichier importé au démarrage, jusqu'à 5 niveaux ; ses lignes comptent dans le contexte de démarrage | `@~/...`, chemins hors du projet |
+| imports `@chemin` | charge le fichier importé au démarrage, jusqu'à quatre sauts ; ses lignes comptent dans le contexte de démarrage | `@~/...`, chemins hors du projet |
 | `AGENTS.md` | ne le charge que si `CLAUDE.md` l'importe, ou s'il n'existe aucun `CLAUDE.md` | |
 | `.claude/rules/*.md` sans `paths` | la charge au démarrage | imports dans une règle |
 | `.claude/rules/*.md` avec `paths` | la charge quand la tâche touche un fichier qui correspond | |
@@ -22,9 +22,9 @@ Un score complet prouve donc que vos fichiers disent ce qu'il faut **à ce
 simulateur**. Il ne prouve pas comment un vrai Claude Code les charge.
 L'en-tête de `agent/agent.py` liste chaque règle qu'il applique. Deux points
 de format viennent de la documentation de Claude Code et n'ont pas été
-vérifiés sur toutes les versions : le frontmatter `paths` d'une règle, et les
-5 niveaux d'imports. Vérifiez-les dans la documentation de la version que
-vous utilisez.
+vérifiés sur toutes les versions : le frontmatter `paths` d'une règle, et le
+maximum de quatre sauts pour les imports. Vérifiez-les dans la documentation
+de la version que vous utilisez.
 
 ## Situation
 
@@ -44,10 +44,13 @@ l'ancien ERP, plus de 3 000 lignes. Tout est dans `challenge/work` :
 | `agent/task.json` | sa tâche : une remise de fidélité dans `src/commandes/discount.py` |
 | `agent/budget.json` | le budget du contexte de démarrage : 200 lignes |
 
-Les 200 lignes viennent du conseil de la documentation de Claude Code :
-garder un `CLAUDE.md` sous 200 lignes. Un import ne réduit pas le contexte :
-les lignes importées sont chargées au démarrage elles aussi, donc elles
-comptent.
+La documentation de Claude Code vise moins de 200 lignes **par fichier
+CLAUDE.md**, et précise que les fichiers importés se chargent avec le
+CLAUDE.md qui les importe. Ce lab applique les 200 lignes à **tout le
+contexte de démarrage**, imports et règles sans `paths` compris : c'est un
+choix du lab, plus strict que la documentation. Un import ne réduit pas le
+contexte : les lignes importées sont chargées au démarrage elles aussi, donc
+elles comptent.
 
 ## Mission
 

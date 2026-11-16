@@ -7,23 +7,28 @@ of the project, then works with what it loaded, and only with that. It writes
 what it loaded, and why, in agent/journal.json.
 
 What it loads, and the subset of each format it simulates. The `cause` of
-each entry in the journal reuses the name of the matcher of the real
-InstructionsLoaded hook event of Claude Code, so that you meet the same words
-with a real agent:
+each entry in the journal reuses the load reasons of the real
+InstructionsLoaded hook event of Claude Code (session_start, include,
+path_glob_match, nested_traversal), so that you meet the same words with a
+real agent. One cause is the simulator's own: `agents_md_native`. The real
+hook documents no load reason for an AGENTS.md read natively.
 
 - At startup (`session_start`), CLAUDE.md and .claude/CLAUDE.md at the root
   of the project, if they exist.
 - At startup (`include`), every file that a loaded CLAUDE.md imports with
-  `@path`, then the files those files import, up to 5 levels. The path is
+  `@path`, then the files those files import, up to four hops (the maximum
+  the Claude Code documentation gives). The path is
   relative to the file that contains the import. An import counts in the
   startup context like the file that imports it. An `@path` inside a code
   span (`...`) or a fenced code block is not an import. A path that does not
   exist is listed under `unresolved_imports` and loaded nowhere. `@~/...`
   and paths outside the project are not simulated. A file is loaded once,
   however many times it is imported.
-- At startup (`agents_md_native`), AGENTS.md, but ONLY when there is no
-  CLAUDE.md, no .claude/CLAUDE.md and no CLAUDE.local.md at the root. With a
-  CLAUDE.md, AGENTS.md is loaded only if CLAUDE.md imports it (`@AGENTS.md`).
+- At startup (`agents_md_native`, a cause of this simulator, not of the real
+  hook), AGENTS.md, but ONLY when there is no CLAUDE.md, no .claude/CLAUDE.md
+  and no CLAUDE.local.md at the root. With a CLAUDE.md, AGENTS.md is loaded
+  only if CLAUDE.md imports it (`@AGENTS.md`). Claude Code reads AGENTS.md
+  natively since v2.1.277.
 - At startup (`session_start`), every `.claude/rules/**/*.md` file WITHOUT a
   `paths` field in its frontmatter.
 - When the task touches a file (`path_glob_match`), every
@@ -79,7 +84,7 @@ from pathlib import Path
 from typing import Any
 
 AGENT_NAME = "simulated agent of the lab vc-contexte-agent (not Claude Code)"
-MAX_IMPORT_DEPTH = 5
+MAX_IMPORT_DEPTH = 4  # « maximum depth of four hops » (memory docs)
 TEST_TIMEOUT = 120
 HERE = Path(__file__).resolve().parent
 CLAUDE_MD_FILES = ("CLAUDE.md", ".claude/CLAUDE.md")

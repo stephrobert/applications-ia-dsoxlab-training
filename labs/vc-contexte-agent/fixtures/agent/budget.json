@@ -1,4 +1,4 @@
 {
   "startup_max_lines": 200,
-  "note": "Budget of the startup context (CLAUDE.md, its @ imports and the rules without paths), in lines. Value set by the course framing (lesson VC-H01, point P03), taken from the size advice for a CLAUDE.md in the Claude Code documentation, not yet confirmed at the source. The simulated agent and the checks of the lab both read this file: change the value here and nowhere else."
+  "note": "Budget of the startup context (CLAUDE.md, its @ imports and the rules without paths), in lines. The Claude Code documentation targets under 200 lines per CLAUDE.md file, and says that imported files load together with the CLAUDE.md that imports them. This lab applies the 200 lines to the whole startup context: a choice of the lab, stricter than the documentation. The simulated agent and the checks of the lab both read this file: change the value here and nowhere else."
 }
