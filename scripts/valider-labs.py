@@ -158,8 +158,15 @@ def valider(lab: Path, rejeu: bool) -> dict:
     CACHE.mkdir(parents=True, exist_ok=True)
     journal_path = CACHE / f"validation-{ident}.log"
     debut = time.time()
+    # L'instant du DÉBUT de la validation : c'est l'arbre de ce moment qui est
+    # mesuré. `date` (le jour seul) reste pour ce qui le lit déjà ;
+    # `horodatage` permet au générateur du site de comparer un verdict à
+    # l'heure exacte d'un commit du même jour, ce que le jour seul ne tranche
+    # pas (2026-11-15 : même commit, un lab « attesté », trois « à réattester »).
+    instant = datetime.now(tz=UTC)
     resultat: dict = {
-        "date": datetime.now(tz=UTC).date().isoformat(),
+        "date": instant.date().isoformat(),
+        "horodatage": instant.isoformat(timespec="seconds"),
         "uv": version_outil("uv"),
         "python": version_outil("python"),
         # Le chemin du journal est enregistré RELATIF au cache de l'utilisateur :
