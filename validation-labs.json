@@ -55,6 +55,61 @@
   "uv": "0.13.8",
   "verdict": "VALIDE"
  },
+ "cc-regles-allow-ask-deny": {
+  "apres": {
+   "echecs": [],
+   "passed": 4,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 4
+  },
+  "avant": {
+   "echecs": [
+    "test_ask_l_emporte_sur_un_allow_plus_precis",
+    "test_deny_l_emporte_sur_allow",
+    "test_le_journal_correspond_aux_regles_actuelles",
+    "test_le_niveau_administre_l_emporte_sur_le_projet"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
+  },
+  "date": "2026-11-16",
+  "duree_s": 4,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/4",
+   "après la solution : 4/4",
+   "après clean et run : 0/4",
+   "poste rendu intact"
+  ],
+  "horodatage": "2026-11-16T05:36:39+00:00",
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-cc-regles-allow-ask-deny.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_ask_l_emporte_sur_un_allow_plus_precis",
+    "test_deny_l_emporte_sur_allow",
+    "test_le_journal_correspond_aux_regles_actuelles",
+    "test_le_niveau_administre_l_emporte_sur_le_projet"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 4
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
  "cc-serveur-mcp-non-approuve": {
   "apres": {
    "echecs": [],
@@ -103,6 +158,63 @@
    "skipped": 0,
    "status": "failed",
    "total": 3
+  },
+  "uv": "0.13.8",
+  "verdict": "VALIDE"
+ },
+ "cc-skill-de-validation": {
+  "apres": {
+   "echecs": [],
+   "passed": 5,
+   "recorded": true,
+   "score": 100,
+   "skipped": 0,
+   "status": "passed",
+   "total": 5
+  },
+  "avant": {
+   "echecs": [
+    "test_allowed_tools_approuve_exactement_les_trois_appels",
+    "test_la_skill_detecte_les_defauts_injectes",
+    "test_la_structure_de_la_skill_est_valide",
+    "test_le_journal_correspond_a_la_skill_actuelle",
+    "test_les_scripts_sont_dans_la_skill_et_executables"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 5
+  },
+  "date": "2026-11-16",
+  "duree_s": 5,
+  "ecarts": [],
+  "etapes": [
+   "état photographié, répertoire de travail absent, 7 conteneur(s) Docker présents",
+   "avant le travail : 0/5",
+   "après la solution : 5/5",
+   "après clean et run : 0/5",
+   "poste rendu intact"
+  ],
+  "horodatage": "2026-11-16T05:36:34+00:00",
+  "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-cc-skill-de-validation.log",
+  "python": "3.14.10",
+  "raisons": [],
+  "rejeu": {
+   "echecs": [
+    "test_allowed_tools_approuve_exactement_les_trois_appels",
+    "test_la_skill_detecte_les_defauts_injectes",
+    "test_la_structure_de_la_skill_est_valide",
+    "test_le_journal_correspond_a_la_skill_actuelle",
+    "test_les_scripts_sont_dans_la_skill_et_executables"
+   ],
+   "passed": 0,
+   "recorded": true,
+   "score": 0,
+   "skipped": 0,
+   "status": "failed",
+   "total": 5
   },
   "uv": "0.13.8",
   "verdict": "VALIDE"
@@ -184,7 +296,7 @@
    "status": "failed",
    "total": 3
   },
-  "date": "2026-11-15",
+  "date": "2026-11-16",
   "duree_s": 5,
   "ecarts": [],
   "etapes": [
@@ -194,6 +306,7 @@
    "après clean et run : 0/3",
    "poste rendu intact"
   ],
+  "horodatage": "2026-11-16T05:36:00+00:00",
   "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-boucle-methode.log",
   "python": "3.14.10",
   "raisons": [],
@@ -236,7 +349,7 @@
    "status": "failed",
    "total": 3
   },
-  "date": "2026-11-15",
+  "date": "2026-11-16",
   "duree_s": 3,
   "ecarts": [],
   "etapes": [
@@ -246,6 +359,7 @@
    "après clean et run : 0/3",
    "poste rendu intact"
   ],
+  "horodatage": "2026-11-16T05:35:52+00:00",
   "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-classifier-applications.log",
   "python": "3.14.10",
   "raisons": [],
@@ -343,7 +457,7 @@
    "status": "failed",
    "total": 4
   },
-  "date": "2026-11-15",
+  "date": "2026-11-16",
   "duree_s": 4,
   "ecarts": [],
   "etapes": [
@@ -353,6 +467,7 @@
    "après clean et run : 0/4",
    "poste rendu intact"
   ],
+  "horodatage": "2026-11-16T05:35:56+00:00",
   "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-contrat-applicatif.log",
   "python": "3.14.10",
   "raisons": [],
@@ -442,7 +557,7 @@
    "status": "failed",
    "total": 5
   },
-  "date": "2026-11-15",
+  "date": "2026-11-16",
   "duree_s": 5,
   "ecarts": [],
   "etapes": [
@@ -452,6 +567,7 @@
    "après clean et run : 0/5",
    "poste rendu intact"
   ],
+  "horodatage": "2026-11-16T05:36:15+00:00",
   "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-harness-agent-ia.log",
   "python": "3.14.10",
   "raisons": [],
@@ -496,7 +612,7 @@
    "status": "failed",
    "total": 3
   },
-  "date": "2026-11-15",
+  "date": "2026-11-16",
   "duree_s": 9,
   "ecarts": [],
   "etapes": [
@@ -506,6 +622,7 @@
    "après clean et run : 0/3",
    "poste rendu intact"
   ],
+  "horodatage": "2026-11-16T05:36:06+00:00",
   "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-paquet-inexistant.log",
   "python": "3.14.10",
   "raisons": [],
@@ -549,7 +666,7 @@
    "status": "failed",
    "total": 4
   },
-  "date": "2026-11-15",
+  "date": "2026-11-16",
   "duree_s": 13,
   "ecarts": [],
   "etapes": [
@@ -559,6 +676,7 @@
    "après clean et run : 0/4",
    "poste rendu intact"
   ],
+  "horodatage": "2026-11-16T05:36:21+00:00",
   "journal": ".cache/dsoxlab/applications-ia-dsoxlab-training/validation-vc-reprise-session.log",
   "python": "3.14.10",
   "raisons": [],
