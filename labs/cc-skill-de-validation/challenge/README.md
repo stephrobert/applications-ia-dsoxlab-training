@@ -1,4 +1,4 @@
-# A validation skill that Claude Code never loaded
+# Challenge: A validation skill that Claude Code never loaded
 
 ## Read this first: what is simulated
 

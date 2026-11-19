@@ -1,4 +1,4 @@
-# Une skill de validation que Claude Code n'a jamais chargée
+# Challenge : Une skill de validation que Claude Code n'a jamais chargée
 
 ## À lire d'abord : ce qui est simulé
 

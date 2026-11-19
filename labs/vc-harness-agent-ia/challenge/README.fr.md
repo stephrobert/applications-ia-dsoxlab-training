@@ -1,4 +1,4 @@
-# Un harness pour l'agent, éprouvé sur un agent simulé
+# Challenge : Un harness pour l'agent, éprouvé sur un agent simulé
 
 ## À lire d'abord : ce qui est simulé
 

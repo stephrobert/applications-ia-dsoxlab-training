@@ -1,4 +1,4 @@
-# A forced push that the rules let through
+# Challenge: A forced push that the rules let through
 
 ## Read this first: what is simulated
 

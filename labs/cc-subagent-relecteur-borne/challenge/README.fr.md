@@ -1,4 +1,4 @@
-# Un subagent relecteur qui a corrigé le code lui-même
+# Challenge : Un subagent relecteur qui a corrigé le code lui-même
 
 ## À lire d'abord : ce qui est simulé
 
