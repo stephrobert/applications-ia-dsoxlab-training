@@ -1,4 +1,4 @@
-# Take over a slice that a session left half done
+# Challenge: Take over a slice that a session left half done
 
 ## Situation
 

@@ -1,4 +1,4 @@
-# A hook that succeeds, blocks and crashes
+# Challenge: A hook that succeeds, blocks and crashes
 
 ## Read this first: what is simulated
 

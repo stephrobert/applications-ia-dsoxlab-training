@@ -1,4 +1,4 @@
-# Reprendre une tranche qu'une session a laissée à moitié faite
+# Challenge : Reprendre une tranche qu'une session a laissée à moitié faite
 
 ## Situation
 

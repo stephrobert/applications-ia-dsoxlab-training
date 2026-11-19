@@ -1,4 +1,4 @@
-# A harness for the agent, tested on a simulated agent
+# Challenge: A harness for the agent, tested on a simulated agent
 
 ## Read this first: what is simulated
 

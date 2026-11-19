@@ -1,4 +1,4 @@
-# A contract is a request
+# Challenge: A contract is a request
 
 ## Situation
 

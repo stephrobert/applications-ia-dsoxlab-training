@@ -1,4 +1,4 @@
-# Un serveur MCP que personne n'a approuvé, déclaré par le dépôt
+# Challenge : Un serveur MCP que personne n'a approuvé, déclaré par le dépôt
 
 ## À lire d'abord : ce qui est simulé
 

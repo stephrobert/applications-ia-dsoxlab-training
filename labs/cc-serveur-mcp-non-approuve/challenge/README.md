@@ -1,4 +1,4 @@
-# An MCP server nobody approved, declared by the repository
+# Challenge: An MCP server nobody approved, declared by the repository
 
 ## Read this first: what is simulated
 

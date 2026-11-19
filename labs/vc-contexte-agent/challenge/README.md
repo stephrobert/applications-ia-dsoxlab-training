@@ -1,4 +1,4 @@
-# The context of an agent: what it loads, and what it uses
+# Challenge: The context of an agent: what it loads, and what it uses
 
 ## Read this first: what is simulated
 
